@@ -1,0 +1,468 @@
+/* Header Component Styles - Navbar Style from Sample */
+.header {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  width: calc(100% - 60px);
+  max-width: 1400px;
+  transition: all 0.3s ease;
+}
+
+.header-container {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: 20px 28px;
+  background: var(--theme-surface);
+  border-radius: 20px;
+  box-shadow:
+    8px 8px 20px var(--theme-shadow-dark),
+    -8px -8px 20px var(--theme-shadow-light);
+  border: 2px solid var(--theme-border);
+}
+
+/* Logo Section - Navbar Brand Style */
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, var(--accent-primary));
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+  box-shadow: 0 4px 20px var(--accent-glow);
+}
+
+.logo-text {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--accent-primary);
+  text-shadow: 0 0 10px var(--accent-glow);
+  margin: 0;
+}
+
+.logo-subtitle {
+  font-size: 0.9rem;
+  color: var(--theme-text-secondary);
+  margin: 0;
+}
+
+/* Navigation - Nav Link Style from Sample - CENTERED */
+.main-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.nav-menu {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 20px;
+}
+
+.nav-item {
+  position: relative;
+}
+
+.nav-link {
+  color: var(--theme-text-primary);
+  background-color: var(--accent-light);
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  font-weight: 500;
+  display: block;
+  border: 2px solid transparent;
+  box-shadow:
+      6px 6px 12px var(--theme-shadow-dark),
+      -6px -6px 12px var(--theme-shadow-light);
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--accent-primary);
+  background: var(--accent-light);
+  border-color: var(--accent-primary);
+  box-shadow: 
+      8px 8px 16px var(--theme-shadow-dark), 
+      -8px -8px 16px var(--theme-shadow-light), 
+      0 0 10px var(--accent-primary);
+}
+
+.nav-link i {
+  font-size: 1rem;
+  opacity: 0.8;
+  margin-right: 0.5rem;
+}
+
+/* Search & Actions - RIGHT ALIGNED */
+.header-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+/* Expandable Search Button - Icon that expands on hover */
+.search-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-button {
+  width: 50px;
+  height: 50px;
+  font-size: 18px;
+  color: var(--accent-primary);
+  background: var(--theme-surface);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    10px 10px 20px var(--theme-shadow-dark),
+    -10px -10px 20px var(--theme-shadow-light);
+  border: 2px solid var(--theme-border);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  z-index: 2;
+}
+
+/* Search input appears below the button and stays visually attached */
+.search-input {
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 10px);
+  transform: translateX(-50%);
+  width: 8px; /* collapsed */
+  height: 44px;
+  padding: 0 20px;
+  background: var(--theme-surface);
+  border: 2px solid var(--theme-border);
+  border-radius: 12px;
+  color: var(--theme-text-primary);
+  font-size: 14px;
+  opacity: 0;
+  pointer-events: none;
+  transition: width 0.32s cubic-bezier(0.2,0.8,0.2,1), opacity 0.2s ease, box-shadow 0.2s ease;
+  box-shadow:
+    10px 10px 20px var(--theme-shadow-dark),
+    -10px -10px 20px var(--theme-shadow-light);
+  z-index: 1;
+}
+
+.search-input::placeholder {
+  color: var(--theme-text-secondary);
+}
+
+/* Hover state - expand search */
+.search-container:hover .search-input,
+.search-container:focus-within .search-input,
+.search-container.open .search-input {
+  width: 220px;
+  opacity: 1;
+  pointer-events: auto;
+  border-color: var(--accent-primary);
+  box-shadow:
+    15px 15px 30px rgba(var(--accent-rgb), 0.12),
+    -15px -15px 30px rgba(255,255,255,0.03),
+    0 0 25px var(--accent-glow);
+}
+
+.search-container:hover {
+  /* keep container neutral so header layout and visuals don't change */
+  --_search-hover: 1; /* noop variable to avoid empty ruleset and lint warnings */
+}
+
+
+.search-container:hover .search-button,
+.search-container:focus-within .search-button,
+.search-container.open .search-button {
+  /* Slightly lift the button but keep its visual styling */
+  transform: scale(1.03);
+  background: linear-gradient(135deg, rgba(var(--accent-rgb),0.06), rgba(var(--accent-rgb),0.03));
+  border: 2px solid var(--accent-primary);
+  box-shadow:
+    8px 8px 18px rgba(var(--accent-rgb), 0.12),
+    -8px -8px 18px rgba(255,255,255,0.03),
+    0 0 20px var(--accent-glow);
+}
+
+
+/* Focus state */
+.search-input:focus {
+  outline: none;
+  width: 220px;
+  opacity: 1;
+  pointer-events: auto;
+  border-color: var(--accent-primary);
+  box-shadow: 
+    15px 15px 30px var(--theme-shadow-dark), 
+    -15px -15px 30px var(--theme-shadow-light), 
+    0 0 25px var(--accent-glow);
+}
+
+.search-icon {
+  position: absolute;
+  right: 15px;
+  color: var(--accent-primary);
+  pointer-events: none;
+  z-index: 3;
+  font-size: 18px;
+}
+
+/* Icon Buttons - Btn-Icon Style from Sample (Wishlist & Color Picker) */
+.action-button {
+  width: 50px;
+  height: 50px;
+  font-size: 18px;
+  color: var(--accent-primary);
+  background: var(--theme-surface);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    10px 10px 20px var(--theme-shadow-dark),
+    -10px -10px 20px var(--theme-shadow-light);
+  border: 2px solid var(--theme-border);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+}
+
+.action-button:hover {
+  border: 2px solid var(--accent-primary);
+  transform: scale(1.1);
+  box-shadow: 
+    15px 15px 30px var(--theme-shadow-dark), 
+    -15px -15px 30px var(--theme-shadow-light), 
+    0 0 25px var(--accent-glow);
+}
+
+.action-button:active {
+  border: 2px solid var(--accent-primary);
+  transform: scale(1.05);
+}
+
+.wishlist-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--accent-danger);
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.2rem 0.4rem;
+  border-radius: 10px;
+  min-width: 18px;
+  text-align: center;
+  line-height: 1;
+}
+
+/* Accent Color Picker */
+.accent-color-picker {
+  position: relative;
+}
+
+/* Make the palette action-button appear active while hovered or when picker is open */
+.accent-color-picker.open .action-button,
+.accent-color-picker:hover .action-button {
+  transform: scale(1.03);
+  background: linear-gradient(135deg, rgba(var(--accent-rgb),0.06), rgba(var(--accent-rgb),0.03));
+  border: 2px solid var(--accent-primary);
+  box-shadow:
+    8px 8px 18px rgba(var(--accent-rgb), 0.12),
+    -8px -8px 18px rgba(255,255,255,0.03),
+    0 0 20px var(--accent-glow);
+}
+
+.accent-color-picker.open .action-button i,
+.accent-color-picker:hover .action-button i {
+  color: var(--accent-primary);
+}
+
+.color-picker-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  background: var(--theme-surface);
+  border: 2px solid var(--accent-primary);
+  border-radius: 12px;
+  padding: 12px;
+  /* start hidden but occupy no pointer events */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px) scale(0.98);
+  transform-origin: top right;
+  transition: opacity 220ms cubic-bezier(0.2,0.8,0.2,1), transform 220ms cubic-bezier(0.2,0.8,0.2,1), visibility 220ms;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  z-index: 1000;
+  box-shadow: var(--shadow-large);
+  min-width: 120px;
+  pointer-events: none;
+}
+
+.accent-color-picker.open .color-picker-dropdown,
+.accent-color-picker:hover .color-picker-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.accent-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid var(--theme-border);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.accent-btn:hover {
+  transform: scale(1.1);
+  border-color: var(--theme-text-primary);
+}
+
+/* Mobile Menu Button */
+.mobile-menu-button {
+  display: none;
+  flex-direction: column;
+  gap: 3px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.mobile-menu-button span {
+  width: 25px;
+  height: 2px;
+  background: var(--theme-text-primary);
+  transition: all 0.3s ease;
+}
+
+/* Mobile Responsive */
+@media (max-width: 1024px) {
+  .header {
+    width: calc(100% - 40px);
+  }
+  
+  .search-container:hover .search-input,
+  .search-input:focus {
+    width: 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    top: 10px;
+    width: calc(100% - 20px);
+  }
+  
+  .header-container {
+    grid-template-columns: auto 1fr;
+    padding: 15px 20px;
+    gap: 1rem;
+  }
+  
+  .main-nav {
+    display: none;
+  }
+  
+  .mobile-menu-button {
+    display: flex;
+  }
+  
+  .header-actions {
+    justify-content: flex-end;
+  }
+  
+  .search-container {
+    order: 1;
+  }
+  
+  .search-container:hover .search-input,
+  .search-input:focus {
+    width: 150px;
+  }
+  
+  .logo-text {
+    font-size: 1.1rem;
+  }
+  
+  .logo-subtitle {
+    display: none;
+  }
+  
+  .action-button {
+    width: 45px;
+    height: 45px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    top: 10px;
+    width: calc(100% - 20px);
+  }
+  
+  .header-container {
+    padding: 12px 16px;
+  }
+  
+  .logo {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
+  
+  .logo-text {
+    font-size: 1rem;
+  }
+  
+  .action-button {
+    width: 40px;
+    height: 40px;
+    font-size: 14px;
+    box-shadow:
+      6px 6px 12px var(--theme-shadow-dark),
+      -6px -6px 12px var(--theme-shadow-light);
+  }
+  
+  .action-button:hover {
+    box-shadow: 
+      8px 8px 16px var(--theme-shadow-dark), 
+      -8px -8px 16px var(--theme-shadow-light), 
+      0 0 15px var(--accent-glow);
+  }
+}
+
+.search-container:hover .search-button i,
+.search-container:focus-within .search-button i,
+.search-container.open .search-button i {
+  color: var(--accent-primary);
+}

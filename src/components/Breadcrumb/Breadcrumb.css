@@ -1,0 +1,36 @@
+/* Breadcrumb Styles */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 24px;
+  background: var(--theme-background);
+  border-radius: 16px;
+  box-shadow:
+    inset -15px -15px 30px rgba(255, 255, 255, 0.1),
+    inset 15px 15px 30px rgba(0, 0, 0, 0.5);
+}
+
+:root:not(.light-theme) .breadcrumb {
+  background: rgba(15, 20, 25, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  box-shadow:
+    inset -20px -20px 40px rgba(0, 0, 0, 0.8),
+    inset 20px 20px 40px rgba(255, 255, 255, 0.05);
+}
+
+.breadcrumb-link {
+  color: var(--accent-primary);
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.breadcrumb-separator {
+  color: var(--theme-text-placeholder);
+  font-size: 14px;
+}
+
+.breadcrumb-current {
+  color: var(--theme-text-secondary);
+  font-size: 14px;
+}

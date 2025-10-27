@@ -1,0 +1,115 @@
+.product-carousel {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  position: relative;
+  padding: 0 1rem; 
+}
+
+.product-swiper {
+  width: 100%;
+  padding: 2.5rem 0 2rem;
+  margin: 0 -1rem; 
+}
+
+.product-swiper .swiper-wrapper {
+  display: flex;
+}
+
+.product-swiper .swiper-slide {
+  margin-right: 1.5rem !important; 
+}
+
+/* Custom Navigation Buttons with FontAwesome */
+.product-carousel .nav-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  background: rgba(30, 30, 30, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+
+.product-carousel .nav-button.prev {
+  left: 5px;
+}
+
+.product-carousel .nav-button.next {
+  right: calc(1.5rem + 15px);
+}
+
+.product-carousel .nav-button:hover {
+  background: rgba(20, 20, 20, 0.95);
+  color: var(--accent-primary);
+  transform: translateY(-50%) scale(1.05);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  border-color: var(--accent-primary);
+}
+
+.product-carousel .nav-button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  transform: translateY(-50%);
+}
+
+.product-carousel .nav-button:disabled:hover {
+  background: rgba(30, 30, 30, 0.9);
+  color: rgba(255, 255, 255, 0.8);
+  transform: translateY(-50%);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Slide Animation */
+.product-carousel .swiper-slide {
+  transition: transform 0.3s ease;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Mobile Responsive */
+@media (max-width: 1024px) {
+  .product-carousel {
+    padding: 0 1.5rem;
+  }
+
+  .product-swiper {
+    margin: 0;
+  }
+
+  .product-swiper .swiper-slide {
+    margin-right: 0.75rem !important;
+  }
+
+  .product-carousel .swiper-button-prev,
+  .product-carousel .swiper-button-next {
+    display: none; 
+  }
+}
+
+@media (max-width: 640px) {
+  .product-carousel {
+    padding: 0 1rem;
+  }
+
+  .product-swiper {
+    padding: 0.5rem 0 1rem;
+  }
+
+  .product-swiper .swiper-slide {
+    margin-right: 0.5rem !important; /* Spacing nhỏ hơn trên mobile */
+  }
+}

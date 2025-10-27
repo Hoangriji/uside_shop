@@ -1,0 +1,106 @@
+/* Card Styles */
+.card-basic {
+  padding: 32px;
+  background: var(--theme-surface);
+  border-radius: 20px;
+  box-shadow:
+    12px 12px 24px var(--theme-shadow-dark),
+    -12px -12px 24px var(--theme-shadow-light);
+  border: 1px solid var(--theme-border);
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  margin: 20px 0;
+}
+
+.card-interactive {
+  padding: 32px;
+  background: var(--theme-surface);
+  border-radius: 20px;
+  box-shadow:
+    12px 12px 24px var(--theme-shadow-dark),
+    -12px -12px 24px var(--theme-shadow-light);
+  border: 1px solid var(--theme-border);
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  cursor: pointer;
+  margin: 20px 0;
+}
+
+.card-interactive:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 16px 16px 32px var(--theme-shadow-dark), -16px -16px 32px var(--theme-shadow-light), 0 0 30px var(--accent-glow);
+}
+
+.card-inset {
+  padding: 24px;
+  background: var(--theme-background);
+  border-radius: 16px;
+  box-shadow:
+    inset -15px -15px 30px rgba(138, 137, 137, 0.1),
+    inset 15px 15px 30px rgba(35, 35, 35, 0.5);
+}
+
+:root:not(.light-theme) .card-inset {
+  background: rgba(15, 20, 25, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  box-shadow:
+    inset -20px -20px 40px rgba(0, 0, 0, 0.8),
+    inset 20px 20px 40px rgba(255, 255, 255, 0.05);
+}
+
+/* Elevated Card Variant */
+.card-elevated {
+  background: var(--theme-background);
+  border: 1px solid var(--theme-border);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  box-shadow:
+    -8px -8px 16px var(--theme-shadow-light),
+    8px 8px 16px var(--theme-shadow-dark);
+}
+
+.card-elevated:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    -12px -12px 24px var(--theme-shadow-light),
+    12px 12px 24px var(--theme-shadow-dark);
+}
+
+:root:not(.light-theme) .card-elevated {
+  background: rgba(15, 20, 25, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow:
+    -8px -8px 16px rgba(255, 255, 255, 0.02),
+    8px 8px 16px rgba(0, 0, 0, 0.6);
+}
+
+:root:not(.light-theme) .card-elevated:hover {
+  box-shadow:
+    -12px -12px 24px rgba(255, 255, 255, 0.03),
+    12px 12px 24px rgba(0, 0, 0, 0.7);
+}
+
+.card-title {
+  color: var(--accent-primary);
+  margin: 0 0 16px 0;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.card-title-small {
+  color: var(--accent-primary);
+  margin: 0 0 12px 0;
+  font-size: 1.2rem;
+}
+
+.card-text {
+  color: var(--theme-text-secondary);
+  margin: 0;
+  line-height: 1.7;
+  font-size: 15px;
+}
+
+.card-text-small {
+  color: var(--theme-text-secondary);
+  margin: 0;
+  line-height: 1.6;
+}

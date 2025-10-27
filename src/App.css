@@ -1,0 +1,17 @@
+#root {#root {
+
+  width: 100%;  width: 100%;
+
+  min-height: 100vh;  min-height: 100vh;
+
+}}
+
+
+
+.app-container {.app-container {
+
+  padding-top: 120px;  padding-top: 120px;
+
+  /* Space for floating header */}
+
+}

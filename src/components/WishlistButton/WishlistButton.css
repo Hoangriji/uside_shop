@@ -1,0 +1,97 @@
+.wishlist-btn {
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.wishlist-btn:hover {
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.wishlist-btn i {
+  color: #666;
+  font-size: 18px;
+  transition: all 0.3s ease;
+}
+
+.wishlist-btn:hover i {
+  color: #ff6b6b;
+}
+
+.wishlist-btn.active i {
+  color: #ff6b6b;
+}
+
+.wishlist-btn span {
+  display: none;
+}
+
+/* Full variant (icon + text) */
+.wishlist-btn.full {
+  border-radius: 25px;
+  width: auto;
+  padding: 8px 16px;
+  gap: 8px;
+}
+
+.wishlist-btn.full span {
+  display: inline;
+  color: #666;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.wishlist-btn.full:hover span {
+  color: #ff6b6b;
+}
+
+.wishlist-btn.full.active span {
+  color: #ff6b6b;
+}
+
+/* Size variants */
+.wishlist-btn.sm {
+  width: 28px;
+  height: 28px;
+}
+
+.wishlist-btn.sm i {
+  font-size: 14px;
+}
+
+.wishlist-btn.sm.full {
+  padding: 6px 12px;
+  gap: 6px;
+}
+
+.wishlist-btn.sm.full span {
+  font-size: 12px;
+}
+
+.wishlist-btn.lg {
+  width: 44px;
+  height: 44px;
+}
+
+.wishlist-btn.lg i {
+  font-size: 22px;
+}
+
+.wishlist-btn.lg.full {
+  padding: 10px 20px;
+  gap: 10px;
+}
+
+.wishlist-btn.lg.full span {
+  font-size: 16px;
+}

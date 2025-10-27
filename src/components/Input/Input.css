@@ -1,0 +1,44 @@
+/* Input Styles */
+.input-text {
+  width: 100%;
+  padding: 18px 24px;
+  font-size: 15px;
+  color: var(--theme-text-primary);
+  background: var(--theme-surface);
+  border-radius: 16px;
+  outline: none;
+  border: none;
+  font-family: 'Quicksand', sans-serif;
+  box-shadow:
+    inset -4px -4px 8px var(--theme-inset-light),
+    inset 4px 4px 8px var(--theme-inset-dark);
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  box-sizing: border-box;
+}
+
+:root:not(.light-theme) .input-text {
+  background: rgba(18, 22, 31, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow:
+    inset -6px -6px 12px rgba(0, 0, 0, 0.6),
+    inset 6px 6px 12px rgba(255, 255, 255, 0.08);
+}
+
+.input-text:focus {
+  border-color: var(--accent-border);
+  box-shadow: inset -4px -4px 8px var(--theme-inset-light), inset 4px 4px 8px var(--theme-inset-dark), 0 0 20px var(--accent-glow);
+  transform: scale(1.02);
+}
+
+:root:not(.light-theme) .input-text:focus {
+  border-color: var(--accent-primary);
+  box-shadow:
+    inset -8px -8px 16px rgba(0, 0, 0, 0.7),
+    inset 6px 6px 12px rgba(255, 255, 255, 0.12),
+    0 0 25px var(--accent-glow);
+}
+
+.input-text:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

@@ -1,0 +1,294 @@
+/* Theme System CSS Variables */
+:root {
+  /* Theme State */
+  --theme: 'dark';
+
+  /* Dark Theme Colors - Enhanced for Better Contrast */
+  --dark-primary: #0a0d13;
+  --dark-secondary: #12161f;
+  --dark-accent: #00bcd4;
+  --dark-background: #070b11;
+  --dark-background-secondary: #0f1419;
+  --dark-background-tertiary: #1a1f2e;
+  --dark-surface: #1e1e2e;
+
+  --dark-text-primary: #ffffff;
+  --dark-text-secondary: #b8bcc8;
+  --dark-text-accent: #00e5ff;
+  --dark-text-placeholder: #6b7280;
+
+  --dark-border: #2a2f3a;
+  --dark-shadow-light: rgba(255, 255, 255, 0.12);
+  --dark-shadow-dark: rgba(0, 0, 0, 0.8);
+  --dark-inset-light: rgba(255, 255, 255, 0.08);
+  --dark-inset-dark: rgba(0, 0, 0, 0.6);
+
+  /* Light Theme Colors */
+  --light-primary: #e0f7fa;
+  --light-secondary: #e4ebf1;
+  --light-accent: #e2e8f0;
+  --light-background: #f0f1f4;
+  --light-background-secondary: #f8fafc;
+  --light-background-tertiary: #f1f5f9;
+  --light-surface: #f0f1f4;
+  --light-text-primary: #1f1f1f;
+  --light-text-secondary: #6b6b6b;
+  --light-text-accent: #0f172a;
+  --light-text-placeholder: #bfc5cf;
+  --light-border: #dfe4ea;
+  --light-shadow-light: rgba(22, 17, 29, 0.15);
+  --light-shadow-dark: rgba(0, 0, 0, 0.1);
+  --light-inset-light: #FAFBFF;
+  --light-inset-dark: rgba(22, 17, 29, 0.1);
+
+  /* Active Theme Colors (Default to Dark) */
+  --theme-primary: var(--dark-primary);
+  --theme-secondary: var(--dark-secondary);
+  --theme-accent: var(--dark-accent);
+  --theme-background: var(--dark-background);
+  --theme-bg-primary: var(--dark-background);
+  --theme-bg-secondary: var(--dark-background-secondary);
+  --theme-bg-tertiary: var(--dark-background-tertiary);
+  --theme-surface: var(--dark-surface);
+  --theme-text-primary: var(--dark-text-primary);
+  --theme-text-secondary: var(--dark-text-secondary);
+  --theme-text-accent: var(--dark-text-accent);
+  --theme-text-placeholder: var(--dark-text-placeholder);
+  --theme-border: var(--dark-border);
+  --theme-shadow-light: var(--dark-shadow-light);
+  --theme-shadow-dark: var(--dark-shadow-dark);
+  --theme-inset-light: var(--dark-inset-light);
+  --theme-inset-dark: var(--dark-inset-dark);
+  --theme-inset-hover-light: rgba(255, 255, 255, 0.15);
+  --theme-inset-hover-dark: rgba(0, 0, 0, 0.7);
+
+  /* Dynamic Accent Colors */
+  --accent-primary: #00d2ff;
+  --accent-secondary: #663399;
+  --accent-rgb: 0, 210, 255;
+  --accent-glow: rgba(var(--accent-rgb), 0.3);
+  --accent-light: rgba(var(--accent-rgb), 0.1);
+  --accent-border: rgba(var(--accent-rgb), 0.2);
+  --accent-danger: #ef4444;
+
+  /* Predefined Accent Options */
+  --accent-blue: #00d2ff;
+  --accent-purple: #a855f7;
+  --accent-pink: #ec4899;
+  --accent-green: #10b981;
+  --accent-orange: #f59e0b;
+  --accent-red: #ef4444;
+  --accent-teal: #14b8a6;
+  --accent-indigo: #6366f1;
+
+  /* Shadow Definitions */
+  --shadow-small: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-medium: 0 4px 16px rgba(0, 0, 0, 0.5);
+  --shadow-large: 0 8px 32px rgba(0, 0, 0, 0.6);
+  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.7);
+
+  /* Neumorphic Shadows */
+  --neumorphic-shadow: 
+    -8px -8px 16px var(--theme-inset-light),
+    8px 8px 16px var(--theme-inset-dark);
+  --neumorphic-shadow-hover: 
+    -12px -12px 24px var(--theme-inset-hover-light),
+    12px 12px 24px var(--theme-inset-hover-dark);
+  --neumorphic-inset: 
+    inset -4px -4px 8px var(--theme-inset-light),
+    inset 4px 4px 8px var(--theme-inset-dark);
+
+  /* Border Radius */
+  --border-radius-sm: 8px;
+  --border-radius: 12px;
+  --border-radius-lg: 16px;
+  --border-radius-xl: 20px;
+
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Light Theme Override */
+:root.light-theme {
+  --theme-primary: var(--light-primary);
+  --theme-secondary: var(--light-secondary);
+  --theme-accent: var(--light-accent);
+  --theme-background: var(--light-background);
+  --theme-bg-primary: var(--light-background);
+  --theme-bg-secondary: var(--light-background-secondary);
+  --theme-bg-tertiary: var(--light-background-tertiary);
+  --theme-surface: var(--light-surface);
+  --theme-text-primary: var(--light-text-primary);
+  --theme-text-secondary: var(--light-text-secondary);
+  --theme-text-accent: var(--light-text-accent);
+  --theme-text-placeholder: var(--light-text-placeholder);
+  --theme-border: var(--light-border);
+  --theme-shadow-light: var(--light-shadow-light);
+  --theme-shadow-dark: var(--light-shadow-dark);
+  --theme-inset-light: var(--light-inset-light);
+  --theme-inset-dark: var(--light-inset-dark);
+  --theme-inset-hover-light: #F8F9FE;
+  --theme-inset-hover-dark: rgba(22, 17, 29, 0.15);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, var(--theme-background) 0%, var(--theme-background-secondary) 40%, var(--theme-background-tertiary) 100%);
+  min-height: 100vh;
+  font-family: var(--font-family);
+  color: var(--theme-text-primary);
+  line-height: 1.7;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  /* Enhanced dark theme backdrop */
+  background-attachment: fixed;
+}
+
+/* Enhanced dark theme body gradient */
+:root:not(.light-theme) body {
+  background:
+    radial-gradient(circle at 20% 20%, rgba(0, 210, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(168, 85, 247, 0.08) 0%, transparent 50%),
+    linear-gradient(135deg, #070b11 0%, #0f1419 40%, #1a1f2e 100%);
+}
+
+/* Light theme specific gradient */
+:root.light-theme body {
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%);
+}
+
+/* Button Styles */
+.btn-primary {
+  padding: 14px 28px;
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+  background: var(--accent-primary);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  font-family: 'Quicksand', sans-serif;
+  box-shadow:
+    inset -6px -6px 12px rgba(0, 0, 0, 0.3),
+    inset 6px 6px 12px rgba(255, 255, 255, 0.1),
+    0 0 15px var(--accent-glow);
+  border: 1px solid var(--accent-border);
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Enhanced dark theme primary button */
+:root:not(.light-theme) .btn-primary {
+  box-shadow:
+    inset -8px -8px 16px rgba(0, 0, 0, 0.5),
+    inset 6px 6px 12px rgba(255, 255, 255, 0.2),
+    0 8px 25px rgba(0, 0, 0, 0.4),
+    0 0 20px var(--accent-glow);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 
+    inset -8px -8px 16px rgba(0, 0, 0, 0.4), 
+    inset 6px 6px 12px rgba(255, 255, 255, 0.15), 
+    0 0 25px var(--accent-glow);
+}
+
+/* Enhanced dark theme primary button hover */
+:root:not(.light-theme) .btn-primary:hover {
+  box-shadow: 
+    inset -10px -10px 20px rgba(0, 0, 0, 0.6), 
+    inset 8px 8px 16px rgba(255, 255, 255, 0.25), 
+    0 15px 35px rgba(0, 0, 0, 0.5),
+    0 0 35px var(--accent-glow);
+}
+
+.btn-primary:active {
+  transform: translateY(-1px) scale(1.02);
+}
+
+.btn-secondary {
+  padding: 14px 28px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #a8b3cf;
+  background: var(--theme-surface);
+  border: 1px solid var(--theme-border);
+  border-radius: 12px;
+  cursor: pointer;
+  font-family: 'Quicksand', sans-serif;
+  box-shadow:
+    inset -6px -6px 12px var(--theme-shadow-dark),
+    inset 6px 6px 12px var(--theme-shadow-light);
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Enhanced dark theme secondary button */
+:root:not(.light-theme) .btn-secondary {
+  color: #c4c9d4;
+  background: rgba(30, 30, 46, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    inset -8px -8px 16px rgba(0, 0, 0, 0.6),
+    inset 6px 6px 12px rgba(255, 255, 255, 0.08),
+    0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.btn-secondary:hover {
+  transform: translateY(-2px);
+  color: var(--theme-text-primary);
+  border-color: var(--accent-border);
+  box-shadow: 
+    inset -8px -8px 16px var(--theme-shadow-dark), 
+    inset 6px 6px 12px var(--theme-shadow-light), 
+    0 0 15px var(--accent-glow);
+}
+
+/* Enhanced dark theme secondary button hover */
+:root:not(.light-theme) .btn-secondary:hover {
+  color: var(--accent-primary);
+  border-color: var(--accent-primary);
+  box-shadow: 
+    inset -10px -10px 20px rgba(0, 0, 0, 0.7), 
+    inset 8px 8px 16px rgba(255, 255, 255, 0.12), 
+    0 8px 25px rgba(0, 0, 0, 0.4),
+    0 0 20px var(--accent-glow);
+}
+
+.btn-secondary:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-icon {
+  width: 50px;
+  height: 50px;
+  font-size: 18px;
+  color: var(--accent-primary);
+  background: var(--theme-surface);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    10px 10px 20px var(--theme-shadow-dark),
+    -10px -10px 20px var(--theme-shadow-light);
+  border: 2px solid var(--theme-border);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.btn-icon:hover {
+  transform: translateY(-3px) scale(1.1);
+  box-shadow: 
+    15px 15px 30px var(--theme-shadow-dark), 
+    -15px -15px 30px var(--theme-shadow-light), 
+    0 0 25px var(--accent-glow);
+}
+
+.btn-icon:active {
+  transform: translateY(-1px) scale(1.05);
+}
