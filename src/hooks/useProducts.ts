@@ -1,29 +1,38 @@
-import useSWR from 'swr';
+import { useState, useEffect } from 'react';
 import type { Product } from '../types';
-import { fetcher } from '../lib/swr-config';
-
-interface ProductsResponse {
-  products: Product[];
-}
+import { ProductsService } from '../services/firebaseService';
 
 export const useProducts = () => {
-  const { data, error, isLoading, isValidating, mutate } = useSWR<ProductsResponse>(
-    '/data/products.json',
-    fetcher,
-    {
-      revalidateOnFocus: true,
-      revalidateOnReconnect: true,
-      refreshInterval: 30000, // Auto refresh mỗi 30s
-      dedupingInterval: 5000,
-      keepPreviousData: true, // Giữ data cũ khi revalidating
-    }
-  );
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(true);
+    
+    // Subscribe to real-time updates from Firebase
+    const unsubscribe = ProductsService.subscribeToProducts((updatedProducts) => {
+      setProducts(updatedProducts);
+      setLoading(false);
+    });
+
+    // Cleanup subscription on unmount
+    return () => unsubscribe();
+  }, []);
+
+  const mutate = () => {
+    // Trigger re-fetch manually if needed
+    setLoading(true);
+    const unsubscribe = ProductsService.subscribeToProducts((updatedProducts) => {
+      setProducts(updatedProducts);
+      setLoading(false);
+    });
+    return unsubscribe;
+  };
 
   return {
-    products: data?.products || [],
-    loading: isLoading,
-    isValidating, // Đang background refresh
-    error: error?.message || null,
-    mutate, // Để manually trigger revalidation nếu cần
+    products,
+    loading,
+    error: null,
+    mutate,
   };
 };

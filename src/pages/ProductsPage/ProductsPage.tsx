@@ -184,6 +184,8 @@ const ProductsPage: React.FC = () => {
 
   // Extract brands from products based on brand field or tags
   const availableBrands = React.useMemo(() => {
+    if (!products || products.length === 0) return [];
+    
     const categoryProducts = selectedCategory === 'all' 
       ? products 
       : products.filter(product => product.category === selectedCategory);
@@ -196,12 +198,14 @@ const ProductsPage: React.FC = () => {
       }
       // Fallback to tags for backward compatibility
       const brandTags = ['LOGITECH', 'RAZER', 'CORSAIR', 'STEELSERIES', 'AKKO', 'DAREU', 'KEYCHRON', 'FILCO', 'LEOPOLD', 'APPLE', 'ASUS', 'E-DRA', 'RAPOO'];
-      product.tags.forEach(tag => {
-        const upperTag = tag.toUpperCase();
-        if (brandTags.includes(upperTag)) {
-          brands.add(upperTag);
-        }
-      });
+      if (product.tags && Array.isArray(product.tags)) {
+        product.tags.forEach(tag => {
+          const upperTag = tag.toUpperCase();
+          if (brandTags.includes(upperTag)) {
+            brands.add(upperTag);
+          }
+        });
+      }
     });
     
     return Array.from(brands).sort();
@@ -209,13 +213,15 @@ const ProductsPage: React.FC = () => {
 
   // Extract connection types
   const availableConnectionTypes = React.useMemo(() => {
+    if (!products || products.length === 0) return [];
+    
     const categoryProducts = selectedCategory === 'all' 
       ? products 
       : products.filter(product => product.category === selectedCategory);
     
     const connectionTypes = new Set<string>();
     categoryProducts.forEach(product => {
-      if (product.connection_types) {
+      if (product.connection_types && Array.isArray(product.connection_types)) {
         product.connection_types.forEach(type => connectionTypes.add(type));
       }
     });
@@ -225,13 +231,15 @@ const ProductsPage: React.FC = () => {
 
   // Extract compatibility options
   const availableCompatibility = React.useMemo(() => {
+    if (!products || products.length === 0) return [];
+    
     const categoryProducts = selectedCategory === 'all' 
       ? products 
       : products.filter(product => product.category === selectedCategory);
     
     const compatibility = new Set<string>();
     categoryProducts.forEach(product => {
-      if (product.compatibility) {
+      if (product.compatibility && Array.isArray(product.compatibility)) {
         product.compatibility.forEach(comp => compatibility.add(comp));
       }
     });
@@ -241,6 +249,8 @@ const ProductsPage: React.FC = () => {
 
   // Extract form factors
   const availableFormFactors = React.useMemo(() => {
+    if (!products || products.length === 0) return [];
+    
     const categoryProducts = selectedCategory === 'all' 
       ? products 
       : products.filter(product => product.category === selectedCategory);
@@ -257,6 +267,7 @@ const ProductsPage: React.FC = () => {
 
   // Extract LED types
   const availableLedTypes = React.useMemo(() => {
+    if (!products || products.length === 0) return [];
     const categoryProducts = selectedCategory === 'all' 
       ? products 
       : products.filter(product => product.category === selectedCategory);
@@ -273,6 +284,7 @@ const ProductsPage: React.FC = () => {
 
   // Extract features
   const availableFeatures = React.useMemo(() => {
+    if (!products || products.length === 0) return [];
     const categoryProducts = selectedCategory === 'all' 
       ? products 
       : products.filter(product => product.category === selectedCategory);
@@ -289,6 +301,7 @@ const ProductsPage: React.FC = () => {
 
   // Extract headset types
   const availableHeadsetTypes = React.useMemo(() => {
+    if (!products || products.length === 0) return [];
     const categoryProducts = selectedCategory === 'all' 
       ? products 
       : products.filter(product => product.category === selectedCategory);
@@ -305,6 +318,7 @@ const ProductsPage: React.FC = () => {
 
   // Extract use cases
   const availableUseCases = React.useMemo(() => {
+    if (!products || products.length === 0) return [];
     const categoryProducts = selectedCategory === 'all' 
       ? products 
       : products.filter(product => product.category === selectedCategory);
@@ -321,6 +335,7 @@ const ProductsPage: React.FC = () => {
 
   // Extract monitor screen sizes
   const availableScreenSizes = React.useMemo(() => {
+    if (!products || products.length === 0) return [];
     const categoryProducts = selectedCategory === 'all' 
       ? products 
       : products.filter(product => product.category === selectedCategory);
@@ -337,6 +352,7 @@ const ProductsPage: React.FC = () => {
 
   // Extract monitor refresh rates
   const availableRefreshRates = React.useMemo(() => {
+    if (!products || products.length === 0) return [];
     const categoryProducts = selectedCategory === 'all' 
       ? products 
       : products.filter(product => product.category === selectedCategory);
@@ -353,6 +369,7 @@ const ProductsPage: React.FC = () => {
 
   // Extract monitor resolutions
   const availableResolutions = React.useMemo(() => {
+    if (!products || products.length === 0) return [];
     const categoryProducts = selectedCategory === 'all' 
       ? products 
       : products.filter(product => product.category === selectedCategory);
@@ -369,6 +386,7 @@ const ProductsPage: React.FC = () => {
 
   // Extract monitor response times
   const availableResponseTimes = React.useMemo(() => {
+    if (!products || products.length === 0) return [];
     const categoryProducts = selectedCategory === 'all' 
       ? products 
       : products.filter(product => product.category === selectedCategory);
@@ -385,6 +403,7 @@ const ProductsPage: React.FC = () => {
 
   // Extract monitor panel types
   const availablePanelTypes = React.useMemo(() => {
+    if (!products || products.length === 0) return [];
     const categoryProducts = selectedCategory === 'all' 
       ? products 
       : products.filter(product => product.category === selectedCategory);
@@ -401,6 +420,7 @@ const ProductsPage: React.FC = () => {
 
   // Extract monitor features
   const availableMonitorFeatures = React.useMemo(() => {
+    if (!products || products.length === 0) return [];
     const categoryProducts = selectedCategory === 'all' 
       ? products 
       : products.filter(product => product.category === selectedCategory);
@@ -417,6 +437,7 @@ const ProductsPage: React.FC = () => {
 
   // Extract USB storage capacities
   const availableStorageCapacities = React.useMemo(() => {
+    if (!products || products.length === 0) return [];
     const categoryProducts = selectedCategory === 'all' 
       ? products 
       : products.filter(product => product.category === selectedCategory);
@@ -433,6 +454,7 @@ const ProductsPage: React.FC = () => {
 
   // Extract USB types
   const availableUsbTypes = React.useMemo(() => {
+    if (!products || products.length === 0) return [];
     const categoryProducts = selectedCategory === 'all' 
       ? products 
       : products.filter(product => product.category === selectedCategory);
@@ -449,6 +471,7 @@ const ProductsPage: React.FC = () => {
 
   // Extract read speeds
   const availableReadSpeeds = React.useMemo(() => {
+    if (!products || products.length === 0) return [];
     const categoryProducts = selectedCategory === 'all' 
       ? products 
       : products.filter(product => product.category === selectedCategory);
@@ -465,6 +488,7 @@ const ProductsPage: React.FC = () => {
 
   // Extract write speeds
   const availableWriteSpeeds = React.useMemo(() => {
+    if (!products || products.length === 0) return [];
     const categoryProducts = selectedCategory === 'all' 
       ? products 
       : products.filter(product => product.category === selectedCategory);
@@ -481,6 +505,7 @@ const ProductsPage: React.FC = () => {
 
   // Extract memory card types
   const availableMemoryCardTypes = React.useMemo(() => {
+    if (!products || products.length === 0) return [];
     const categoryProducts = selectedCategory === 'all' 
       ? products 
       : products.filter(product => product.category === selectedCategory);
@@ -497,6 +522,7 @@ const ProductsPage: React.FC = () => {
 
   // Extract digital content types
   const availableContentTypes = React.useMemo(() => {
+    if (!products || products.length === 0) return [];
     const categoryProducts = selectedCategory === 'all' 
       ? products 
       : products.filter(product => product.category === selectedCategory);
@@ -513,6 +539,7 @@ const ProductsPage: React.FC = () => {
 
   // Extract digital format types
   const availableFormatTypes = React.useMemo(() => {
+    if (!products || products.length === 0) return [];
     const categoryProducts = selectedCategory === 'all' 
       ? products 
       : products.filter(product => product.category === selectedCategory);
@@ -529,6 +556,7 @@ const ProductsPage: React.FC = () => {
 
   // Extract digital license types
   const availableLicenseTypes = React.useMemo(() => {
+    if (!products || products.length === 0) return [];
     const categoryProducts = selectedCategory === 'all' 
       ? products 
       : products.filter(product => product.category === selectedCategory);
@@ -545,6 +573,7 @@ const ProductsPage: React.FC = () => {
 
   // Extract digital software compatibility
   const availableSoftwareCompatibility = React.useMemo(() => {
+    if (!products || products.length === 0) return [];
     const categoryProducts = selectedCategory === 'all' 
       ? products 
       : products.filter(product => product.category === selectedCategory);
@@ -561,6 +590,7 @@ const ProductsPage: React.FC = () => {
 
   // Extract other products price ranges
   const availableOtherPriceRanges = React.useMemo(() => {
+    if (!products || products.length === 0) return [];
     const categoryProducts = selectedCategory === 'all' 
       ? products 
       : products.filter(product => product.category === selectedCategory);
@@ -577,6 +607,7 @@ const ProductsPage: React.FC = () => {
 
   // Extract other products product types
   const availableOtherProductTypes = React.useMemo(() => {
+    if (!products || products.length === 0) return [];
     const categoryProducts = selectedCategory === 'all' 
       ? products 
       : products.filter(product => product.category === selectedCategory);
@@ -593,6 +624,7 @@ const ProductsPage: React.FC = () => {
 
   // Extract other products materials
   const availableOtherMaterials = React.useMemo(() => {
+    if (!products || products.length === 0) return [];
     const categoryProducts = selectedCategory === 'all' 
       ? products 
       : products.filter(product => product.category === selectedCategory);
@@ -609,6 +641,7 @@ const ProductsPage: React.FC = () => {
 
   // Extract subcategories from products
   const availableSubcategories = React.useMemo(() => {
+    if (!products || products.length === 0) return [];
     const categoryProducts = selectedCategory === 'all' 
       ? products 
       : products.filter(product => product.category === selectedCategory);
@@ -1172,6 +1205,7 @@ const ProductsPage: React.FC = () => {
     return () => document.removeEventListener('click', handleClickOutside);
   }, []);
 
+  // Early return for loading/error states BEFORE any useMemo computations
   if (productsLoading || categoriesLoading) {
     return (
       <div className="products-page">
@@ -1189,6 +1223,21 @@ const ProductsPage: React.FC = () => {
         <div className="error-container">
           <i className="fas fa-exclamation-triangle"></i>
           <p>Không thể tải sản phẩm. Vui lòng thử lại!</p>
+          <button onClick={() => window.location.reload()} className="retry-button">
+            <i className="fas fa-redo"></i> Thử lại
+          </button>
+        </div>
+      </div>
+    );
+  }
+  
+  // Guard: Ensure products array exists before rendering
+  if (!products || products.length === 0) {
+    return (
+      <div className="products-page">
+        <div className="empty-container">
+          <i className="fas fa-box-open"></i>
+          <p>Chưa có sản phẩm nào.</p>
         </div>
       </div>
     );

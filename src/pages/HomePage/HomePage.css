@@ -265,7 +265,7 @@
 
 /* Content Section (generic for featured products) */
 .content-section {
-  padding: 3rem 0;
+  padding: 0;
   background: var(--theme-bg-secondary);
   max-width: 1440px;
   margin: 0 auto;
@@ -312,6 +312,15 @@
 }
 
 /* Digital Products Section */
+hr.line {
+
+  border: none;
+  border-top: 1px solid var(--accent-primary);
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0;
+}
+
 .digital-section {
   padding: 3rem 2rem;
   background: var(--theme-bg-secondary);

@@ -38,7 +38,10 @@ export const SimpleProductCard: React.FC<SimpleProductCardProps> = ({
 
   return (
     <ProductCard 
-      product={product} 
+      product={{
+        ...product,
+        stockStatus: databaseProduct.stock_status
+      }} 
       onViewDetails={onViewDetails}
     />
   );

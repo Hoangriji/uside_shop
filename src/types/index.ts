@@ -144,6 +144,17 @@ export interface AnalyticsEvent {
   url: string;
 }
 
+// Activity Log Types
+export interface ActivityLog {
+  id: string;
+  action: 'create' | 'update' | 'delete' | 'feature' | 'unfeature';
+  productId: string;
+  productName: string;
+  timestamp: string;
+  details?: string;
+  category?: string;
+}
+
 // Legacy types (keeping for compatibility)
 export interface User {
   id: number;

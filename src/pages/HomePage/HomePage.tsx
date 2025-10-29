@@ -9,7 +9,7 @@ import "./HomePage.css";
 
 const HomePage = () => {
   const navigate = useNavigate();
-  const { products, loading, isValidating, error } = useProducts();
+  const { products, loading, error } = useProducts();
   const { setProducts, getFeaturedProducts, getDigitalProducts } =
     useProductStore();
 
@@ -52,7 +52,7 @@ const HomePage = () => {
   return (
     <div className="home-page">
       {/* Data Sync Indicator */}
-      <DataSyncIndicator isValidating={isValidating} />
+      <DataSyncIndicator isValidating={loading} />
 
       {/* Hero Section */}
       <section className="hero-section">
@@ -186,6 +186,7 @@ const HomePage = () => {
       </section>
 
       {/* Free Digital Products Section */}
+      <hr className="line"></hr>
       <section className="digital-section">
         {digitalProducts.length > 0 && (
           <section className="content-section">

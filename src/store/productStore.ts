@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import type { Product, SearchFilters } from '../types';
+import { ProductsService } from '../services/firebaseService';
 
 interface ProductStore {
   // State
@@ -9,8 +10,10 @@ interface ProductStore {
   searchQuery: string;
   loading: boolean;
   error: string | null;
+  unsubscribe?: () => void;
 
   // Actions
+  loadProducts: () => Promise<void>;
   setProducts: (products: Product[]) => void;
   setFilters: (filters: SearchFilters) => void;
   setSearchQuery: (query: string) => void;
@@ -32,8 +35,29 @@ export const useProductStore = create<ProductStore>((set, get) => ({
   searchQuery: '',
   loading: false,
   error: null,
+  unsubscribe: undefined,
 
   // Actions
+  loadProducts: async () => {
+    set({ loading: true, error: null });
+    try {
+      // Subscribe to real-time updates from Firebase
+      const unsubscribe = ProductsService.subscribeToProducts((products) => {
+        set({ products, filteredProducts: products, loading: false });
+        get().applyFilters();
+      });
+      
+      // Store unsubscribe function for cleanup if needed
+      set({ unsubscribe });
+    } catch (error) {
+      console.error('Error loading products:', error);
+      set({ error: 'Không thể tải dữ liệu sản phẩm', loading: false });
+      
+      // Fallback to empty array if Firebase fails
+      set({ products: [], filteredProducts: [] });
+    }
+  },
+
   setProducts: (products) => {
     set({ products, filteredProducts: products });
     get().applyFilters();
@@ -129,7 +153,7 @@ export const useProductStore = create<ProductStore>((set, get) => ({
 
   // Computed getters
   getFeaturedProducts: () => {
-    return get().products.filter(product => product.featured);
+    return get().products.filter(product => product.featured).slice(0, 12);
   },
 
   getProductsByCategory: (category) => {
@@ -137,7 +161,7 @@ export const useProductStore = create<ProductStore>((set, get) => ({
   },
 
   getDigitalProducts: () => {
-    return get().products.filter(product => product.type === 'digital');
+    return get().products.filter(product => product.type === 'digital').slice(0, 12);
   },
 
   getPhysicalProducts: () => {

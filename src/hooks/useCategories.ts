@@ -1,27 +1,27 @@
-import useSWR from 'swr';
+import { useState, useEffect } from 'react';
 import type { Category } from '../types';
-import { fetcher } from '../lib/swr-config';
-
-interface CategoriesResponse {
-  categories: Category[];
-}
+import { CategoriesService } from '../services/firebaseService';
 
 export const useCategories = () => {
-  const { data, error, isLoading } = useSWR<CategoriesResponse>(
-    '/data/categories.json',
-    fetcher,
-    {
-      revalidateOnFocus: true,
-      revalidateOnReconnect: true,
-      refreshInterval: 60000, // Categories ít thay đổi hơn, refresh mỗi 60s
-      dedupingInterval: 10000,
-      keepPreviousData: true,
-    }
-  );
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(true);
+    
+    // Subscribe to real-time updates from Firebase
+    const unsubscribe = CategoriesService.subscribeToCategories((updatedCategories) => {
+      setCategories(updatedCategories as unknown as Category[]);
+      setLoading(false);
+    });
+
+    // Cleanup subscription on unmount
+    return () => unsubscribe();
+  }, []);
 
   return {
-    categories: data?.categories || [],
-    loading: isLoading,
-    error: error?.message || null,
+    categories,
+    loading,
+    error: null,
   };
 };

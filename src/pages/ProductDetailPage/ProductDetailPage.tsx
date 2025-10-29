@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useProducts } from '../../hooks/useProducts';
+import { useSiteConfig } from '../../hooks/useSiteConfig';
 import { WishlistButton } from '../../components/WishlistButton';
 import { RelatedProducts } from '../../components/RelatedProducts';
 import './ProductDetailPage.css';
@@ -9,16 +10,31 @@ const ProductDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { products } = useProducts();
+  const { config } = useSiteConfig();
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-  const [quantity, setQuantity] = useState(1);
 
   // Tìm product trực tiếp từ database
   const product = products.find(p => p.id === id);
 
-  const addToCart = () => {
-    if (!product) return;
-    console.log('Added to cart:', product, 'Quantity:', quantity);
-    // TODO: Implement cart functionality
+  // Handle contact for purchase
+  const handleMessengerPurchase = () => {
+    if (!product || !config) return;
+    
+    const message = config.site?.contact?.facebook_text
+      ?.replace('[PRODUCT_NAME]', product.name)
+      ?.replace('[PRICE]', `${product.price_vnd.toLocaleString('vi-VN')} VNĐ`) || 
+      `Tôi muốn mua sản phẩm: ${product.name} - Giá: ${product.price_vnd.toLocaleString('vi-VN')} VNĐ`;
+    
+    const messengerUrl = config.site?.contact?.facebook || 'https://m.me/uside.shop';
+    const encodedMessage = encodeURIComponent(message);
+    window.open(`${messengerUrl}?text=${encodedMessage}`, '_blank');
+  };
+
+  const handleDiscordPurchase = () => {
+    if (!product || !config) return;
+    
+    const discordUrl = config.site?.contact?.discord || 'https://discord.gg/uside-shop';
+    window.open(discordUrl, '_blank');
   };
 
   if (!product) {
@@ -32,7 +48,7 @@ const ProductDetailPage: React.FC = () => {
     );
   }
 
-  const isInStock = product.stock_status === 'in_stock';
+  const stockStatus = product.stock_status;
 
   return (
     <div className="product-detail-page">
@@ -106,10 +122,15 @@ const ProductDetailPage: React.FC = () => {
             </div>
 
             <div className="detail-stock-status">
-              {isInStock ? (
+              {stockStatus === 'in_stock' ? (
                 <span className="detail-in-stock">
                   <i className="fas fa-check-circle"></i>
                   Còn hàng
+                </span>
+              ) : stockStatus === 'low_stock' ? (
+                <span className="detail-low-stock">
+                  <i className="fas fa-exclamation-circle"></i>
+                  Sắp hết
                 </span>
               ) : (
                 <span className="detail-out-of-stock">
@@ -125,31 +146,32 @@ const ProductDetailPage: React.FC = () => {
 
             {/* Product Actions */}
             <div className="detail-actions">
-              <div className="detail-quantity-selector">
-                <label>Số lượng:</label>
-                <div className="detail-quantity-controls">
+              <div className="detail-action-buttons">
+                <div>
                   <button 
-                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    disabled={quantity <= 1}
+                    className="detail-messenger-btn"
+                    onClick={handleMessengerPurchase}
+                    disabled={stockStatus === 'out_of_stock'}
                   >
-                    <i className="fas fa-minus"></i>
+                    <i className="fab fa-facebook-messenger"></i>
+                    <div className="btn-content">
+                      <span className="btn-label">Mua qua Messenger</span>
+                      <span className="btn-price">{product.price_vnd.toLocaleString('vi-VN')} VNĐ</span>
+                    </div>
                   </button>
-                  <span>{quantity}</span>
-                  <button onClick={() => setQuantity(quantity + 1)}>
-                    <i className="fas fa-plus"></i>
+                  
+                  <button 
+                    className="detail-discord-btn"
+                    onClick={handleDiscordPurchase}
+                    disabled={stockStatus === 'out_of_stock'}
+                  >
+                    <i className="fab fa-discord"></i>
+                    <div className="btn-content">
+                      <span className="btn-label">Mua bằng Coin</span>
+                      <span className="btn-price">{product.price_virtual.toLocaleString('vi-VN')} UC</span>
+                    </div>
                   </button>
                 </div>
-              </div>
-
-              <div className="detail-action-buttons">
-                <button 
-                  className="detail-add-to-cart-btn"
-                  onClick={addToCart}
-                  disabled={!isInStock}
-                >
-                  <i className="fas fa-shopping-cart"></i>
-                  {isInStock ? 'Thêm vào giỏ hàng' : 'Hết hàng'}
-                </button>
                 
                 <WishlistButton 
                   product={{
@@ -159,7 +181,7 @@ const ProductDetailPage: React.FC = () => {
                     image: product.images?.[0] || '',
                     category: product.category,
                     description: product.description,
-                    inStock: isInStock
+                    inStock: stockStatus !== 'out_of_stock'
                   }} 
                   variant="full" 
                   size="md" 

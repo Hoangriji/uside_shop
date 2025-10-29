@@ -1,33 +1,23 @@
 import { useState, useEffect } from 'react';
 import type { SiteConfig } from '../types';
+import { SiteConfigService } from '../services/firebaseService';
 
 export const useSiteConfig = () => {
   const [config, setConfig] = useState<SiteConfig | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchConfig = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch('/data/config.json');
-        
-        if (!response.ok) {
-          throw new Error('Failed to fetch site config');
-        }
-        
-        const data = await response.json();
-        setConfig(data);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Unknown error');
-        console.error('Error fetching site config:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
+    setLoading(true);
+    
+    // Subscribe to real-time updates from Firebase
+    const unsubscribe = SiteConfigService.subscribeToSiteConfig((updatedConfig) => {
+      setConfig(updatedConfig as unknown as SiteConfig);
+      setLoading(false);
+    });
 
-    fetchConfig();
+    // Cleanup subscription on unmount
+    return () => unsubscribe();
   }, []);
 
-  return { config, loading, error };
+  return { config, loading, error: null };
 };

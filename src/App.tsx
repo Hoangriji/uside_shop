@@ -6,18 +6,31 @@ import AboutPage from './pages/AboutPage/AboutPage';
 import ContactPage from './pages/ContactPage/ContactPage';
 import WishlistPage from './pages/WishlistPage/WishlistPage';
 import ProductDetailPage from './pages/ProductDetailPage/ProductDetailPage';
+import DashboardApp from './pages/DashboardPage/DashboardApp';
 import { Header } from './components/Header';
 import { ScrollToTop } from './components/ScrollToTop';
 import { getWishlistCount } from './utils/wishlist';
+import { useProductStore } from './store/productStore';
 import './styles/global.css';
 
 const App: React.FC = () => {
   const location = useLocation();
   const [currentAccentColor, setCurrentAccentColor] = useState('#00d2ff');
   const [wishlistCount, setWishlistCount] = useState(0);
+  const { loadProducts } = useProductStore();
 
-  // Get current page from location
+  // Check if current route is dashboard
+  const isDashboardRoute = location.pathname.startsWith('/dashboard');
+
+  // Get current page from location (exclude dashboard)
   const currentPage = location.pathname.split('/')[1] || 'home';
+
+  // Load products from Firebase on app start
+  useEffect(() => {
+    if (!isDashboardRoute) {
+      loadProducts();
+    }
+  }, [loadProducts, isDashboardRoute]);
 
   // Load wishlist count
   useEffect(() => {
@@ -39,6 +52,11 @@ const App: React.FC = () => {
   useEffect(() => {
     document.documentElement.style.setProperty('--accent-primary', currentAccentColor);
   }, [currentAccentColor]);
+
+  // If it's a dashboard route, render dashboard app without main layout
+  if (isDashboardRoute) {
+    return <DashboardApp />;
+  }
 
   return (
     <div className="App">

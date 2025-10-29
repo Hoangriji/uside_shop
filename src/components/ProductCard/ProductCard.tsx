@@ -12,6 +12,7 @@ interface Product {
   category: string;
   description: string;
   inStock: boolean;
+  stockStatus?: 'in_stock' | 'low_stock' | 'out_of_stock';
   is_free?: boolean;
   file_size?: string;
 }
@@ -43,9 +44,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onViewDetails
         
         <div className="card-price">
           <span className="card-price-current">
-            {product.price.toLocaleString('vi-VN')}đ
+            {(product.price || 0).toLocaleString('vi-VN')}đ
           </span>
-          {product.originalPrice && product.originalPrice > product.price && (
+          {product.originalPrice && product.originalPrice > (product.price || 0) && (
             <span className="card-price-original">
               {product.originalPrice.toLocaleString('vi-VN')}đ
             </span>
@@ -54,9 +55,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onViewDetails
 
         <div className="card-footer">
           <div className="card-stock">
-            {product.inStock ? (
+            {product.stockStatus === 'in_stock' || (!product.stockStatus && product.inStock) ? (
               <Badge variant="success">
                 <i className="fas fa-star"></i> Còn hàng
+              </Badge>
+            ) : product.stockStatus === 'low_stock' ? (
+              <Badge variant="warning">
+                <i className="fas fa-exclamation-circle"></i> Sắp hết
               </Badge>
             ) : (
               <Badge variant="danger">
