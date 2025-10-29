@@ -4,7 +4,9 @@ import { useProducts } from "../../hooks/useProducts";
 import { useProductStore } from "../../store/productStore";
 import { DataSyncIndicator } from "../../components/DataSyncIndicator/DataSyncIndicator";
 import ProductCarousel from "../../components/ProductCarousel/ProductCarousel";
+import { TextType } from "../../components/TextType";
 import Button from "../../components/Button";
+import { ElectricBorder } from '../../components';
 import "./HomePage.css";
 
 const HomePage = () => {
@@ -58,7 +60,17 @@ const HomePage = () => {
       <section className="hero-section">
         <div className="hero-wrapper">
           <div className="hero-content">
-            <h1 className="hero-title">Chào Mừng Bạn Đến Với USide Shop</h1>
+            <h1 className="hero-title">
+              <TextType
+                text={[
+                  "Chào Mừng Bạn Đến Với USide Shop",
+                  "Khám Phá Thế Giới Gaming Gear Chuyên Nghiệp",
+                ]}
+                typingSpeed={100}
+                deletingSpeed={80}
+                pauseDuration={3000}
+              />
+            </h1>
             <p className="hero-description">
               Khám phá bộ sưu tập gaming hardware chất lượng cao và digital
               products.
@@ -177,8 +189,7 @@ const HomePage = () => {
 
             <div className="section-footer">
               <Button variant="secondary" onClick={() => navigate("/products")}>
-                Xem tất cả sản phẩm{" "}
-                <i className="fas fa-arrow-right"></i>
+                Xem tất cả sản phẩm <i className="fas fa-arrow-right"></i>
               </Button>
             </div>
           </section>
@@ -186,7 +197,15 @@ const HomePage = () => {
       </section>
 
       {/* Free Digital Products Section */}
-      <hr className="line"></hr>
+      <ElectricBorder
+        color="var(--accent-primary)"
+        speed={1}
+        chaos={1}
+        thickness={2}
+        className="line-electric"
+      >
+        <hr className="line"></hr>
+      </ElectricBorder>
       <section className="digital-section">
         {digitalProducts.length > 0 && (
           <section className="content-section">
@@ -214,8 +233,7 @@ const HomePage = () => {
                 variant="primary"
                 onClick={() => navigate("/products?category=digital")}
               >
-                Khám phá thêm{" "}
-                <i className="fas fa-arrow-right"></i>
+                Khám phá thêm <i className="fas fa-arrow-right"></i>
               </Button>
             </div>
           </section>

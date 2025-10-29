@@ -9,6 +9,7 @@ import ProductDetailPage from './pages/ProductDetailPage/ProductDetailPage';
 import DashboardApp from './pages/DashboardPage/DashboardApp';
 import { Header } from './components/Header';
 import { ScrollToTop } from './components/ScrollToTop';
+import { ClickSpark } from './components/ClickSpark';
 import { getWishlistCount } from './utils/wishlist';
 import { useProductStore } from './store/productStore';
 import './styles/global.css';
@@ -59,23 +60,25 @@ const App: React.FC = () => {
   }
 
   return (
-    <div className="App">
-      <Header 
-        currentPage={currentPage} 
-        wishlistCount={wishlistCount}
-        currentAccentColor={currentAccentColor}
-        setCurrentAccentColor={setCurrentAccentColor}
-      />
-      <ScrollToTop />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/products" element={<ProductsPage />} />
-        <Route path="/product/:id" element={<ProductDetailPage />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/contact" element={<ContactPage />} />
-        <Route path="/wishlist" element={<WishlistPage />} />
-      </Routes>
-    </div>
+    <ClickSpark>
+      <div className="App">
+        <Header 
+          currentPage={currentPage} 
+          wishlistCount={wishlistCount}
+          currentAccentColor={currentAccentColor}
+          setCurrentAccentColor={setCurrentAccentColor}
+        />
+        <ScrollToTop />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/products" element={<ProductsPage />} />
+          <Route path="/product/:id" element={<ProductDetailPage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/wishlist" element={<WishlistPage />} />
+        </Routes>
+      </div>
+    </ClickSpark>
   );
 };
 

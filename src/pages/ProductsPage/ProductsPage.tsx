@@ -1685,7 +1685,7 @@ const ProductsPage: React.FC = () => {
               {availableUsbTypes.length > 0 && (
                 <DropdownFilter
                   label="Loại USB"
-                  icon="fas fa-usb"
+                  icon="fa-brands fa-usb"
                   items={availableUsbTypes}
                   selectedItems={selectedUsbTypes}
                   onItemToggle={handleUsbTypeToggle}
