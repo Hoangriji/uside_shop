@@ -8,7 +8,6 @@
 /* Hero Section */
 .hero-section {
   min-height: 100vh;
-  padding: 2rem 2rem 1.5rem;
   margin-top: 0;
   padding-top: calc(var(--header-height, 80px) + 2rem);
   position: relative;
@@ -313,7 +312,6 @@
 
 /* Digital Products Section */
 hr.line {
-
   border: none;
   border-top: 1px solid var(--accent-primary);
   max-width: 1440px;
@@ -330,6 +328,7 @@ hr.line {
 .categories-section {
   padding: 3rem 2rem;
   background: var(--theme-bg-primary);
+  margin: 0 auto;
 }
 
 .categories-wrapper{
