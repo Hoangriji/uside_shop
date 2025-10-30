@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@types/react-router-dom": "^5.3.3",
+    "@vercel/speed-insights": "^1.2.0",
     "firebase": "^12.4.0",
     "gsap": "^3.13.0",
     "motion": "^12.23.24",

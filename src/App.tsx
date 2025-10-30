@@ -1,14 +1,15 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import { Header } from './components/Header';
 import { ScrollToTop } from './components/ScrollToTop';
 import { ClickSpark } from './components/ClickSpark';
 import { getWishlistCount } from './utils/wishlist';
 import { useProductStore } from './store/productStore';
+import HomePage from './pages/HomePage/HomePage'; // EAGER LOAD for instant Hero
 import './styles/global.css';
 
-// Lazy load pages for better performance
-const HomePage = lazy(() => import('./pages/HomePage/HomePage'));
+// Lazy load non-critical pages
 const ProductsPage = lazy(() => import('./pages/ProductsPage/ProductsPage'));
 const AboutPage = lazy(() => import('./pages/AboutPage/AboutPage'));
 const ContactPage = lazy(() => import('./pages/ContactPage/ContactPage'));
@@ -95,16 +96,35 @@ const App: React.FC = () => {
           setCurrentAccentColor={setCurrentAccentColor}
         />
         <ScrollToTop />
-        <Suspense fallback={<PageLoader />}>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/products" element={<ProductsPage />} />
-            <Route path="/product/:id" element={<ProductDetailPage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/contact" element={<ContactPage />} />
-            <Route path="/wishlist" element={<WishlistPage />} />
-          </Routes>
-        </Suspense>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/products" element={
+            <Suspense fallback={<PageLoader />}>
+              <ProductsPage />
+            </Suspense>
+          } />
+          <Route path="/product/:id" element={
+            <Suspense fallback={<PageLoader />}>
+              <ProductDetailPage />
+            </Suspense>
+          } />
+          <Route path="/about" element={
+            <Suspense fallback={<PageLoader />}>
+              <AboutPage />
+            </Suspense>
+          } />
+          <Route path="/contact" element={
+            <Suspense fallback={<PageLoader />}>
+              <ContactPage />
+            </Suspense>
+          } />
+          <Route path="/wishlist" element={
+            <Suspense fallback={<PageLoader />}>
+              <WishlistPage />
+            </Suspense>
+          } />
+        </Routes>
+        <SpeedInsights />
       </div>
     </ClickSpark>
   );

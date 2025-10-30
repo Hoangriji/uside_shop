@@ -1,5 +1,6 @@
 import React from 'react';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import { AuthProvider } from '../../contexts/AuthContext';
 import { useAuth } from '../../hooks/useAuth';
 import DashboardLogin from './DashboardLogin';
@@ -76,6 +77,7 @@ const DashboardApp: React.FC = () => {
     <AuthProvider>
       <div className="dashboard-app">
         <DashboardRoutes />
+        <SpeedInsights />
       </div>
     </AuthProvider>
   );

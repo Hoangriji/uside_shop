@@ -1,31 +1,29 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useProducts } from "../../hooks/useProducts";
 import { useProductStore } from "../../store/productStore";
-import { DataSyncIndicator } from "../../components/DataSyncIndicator/DataSyncIndicator";
 import ProductCarousel from "../../components/ProductCarousel/ProductCarousel";
 import { LazySection } from "../../components/LazySection";
 import { SkeletonCarousel, SkeletonCard } from "../../components/Skeleton";
-import { TextType } from "../../components/TextType";
 import Button from "../../components/Button";
 import "./HomePage.css";
 
 const HomePage = () => {
   const navigate = useNavigate();
-  const { products, loading, error } = useProducts();
+  const { products } = useProducts();
   const { setProducts, getFeaturedProducts, getDigitalProducts } =
     useProductStore();
   const [loadSpline, setLoadSpline] = useState(false);
 
+  // Load products in background (non-blocking)
   useEffect(() => {
     if (products.length > 0) {
       setProducts(products);
     }
   }, [products, setProducts]);
 
-  // Lazy load Spline after Hero content renders
+  // Lazy load Spline after Hero renders
   useEffect(() => {
-    // Use requestIdleCallback for better performance, fallback to setTimeout
     if ('requestIdleCallback' in window) {
       requestIdleCallback(() => setLoadSpline(true), { timeout: 2000 });
     } else {
@@ -33,55 +31,29 @@ const HomePage = () => {
     }
   }, []);
 
-  const featuredProducts = getFeaturedProducts();
-  const digitalProducts = getDigitalProducts().filter((p) => p.is_free);
+  // Memoize expensive computations
+  const featuredProducts = useMemo(() => {
+    if (products.length === 0) return [];
+    return getFeaturedProducts();
+  }, [products, getFeaturedProducts]);
+  
+  const digitalProducts = useMemo(() => {
+    if (products.length === 0) return [];
+    return getDigitalProducts().filter((p) => p.is_free);
+  }, [products, getDigitalProducts]);
 
   const handleCategoryClick = (category: string) => {
     navigate(`/products?category=${category}`);
   };
 
-  // Chỉ hiển thị loading khi chưa có products nào
-  if (loading && products.length === 0) {
-    return (
-      <div className="home-page">
-        <div className="loading-container">
-          <div className="loading-spinner"></div>
-          <p>Đang tải sản phẩm...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="home-page">
-        <div className="error-container">
-          <p>Lỗi tải dữ liệu: {error}</p>
-          <Button onClick={() => window.location.reload()}>Thử lại</Button>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="home-page">
-      {/* Data Sync Indicator */}
-      <DataSyncIndicator isValidating={loading} />
-
-      {/* Hero Section */}
+      {/* Hero Section - Renders IMMEDIATELY */}
       <section className="hero-section">
         <div className="hero-wrapper">
           <div className="hero-content">
             <h1 className="hero-title">
-              <TextType
-                text={[
-                  "Chào Mừng Bạn Đến Với USide Shop",
-                  "Khám Phá Thế Giới Gaming Gear Chuyên Nghiệp",
-                ]}
-                typingSpeed={100}
-                deletingSpeed={80}
-                pauseDuration={3000}
-              />
+              Chào Mừng Bạn Đến Với USide Shop
             </h1>
             <p className="hero-description">
               Khám phá bộ sưu tập gaming hardware chất lượng cao và digital
@@ -203,35 +175,48 @@ const HomePage = () => {
         }
       >
         <section className="featured-section">
-          {featuredProducts.length > 0 && (
-          <section className="content-section">
-            <div className="section-header">
-              <h2 className="section-title">
-                <i className="fas fa-star"></i>
-                Sản Phẩm Nổi Bật
-              </h2>
-              <p className="section-description">
-                Những sản phẩm gaming gear được yêu thích nhất
-              </p>
-            </div>
+          {featuredProducts.length > 0 ? (
+            <section className="content-section">
+              <div className="section-header">
+                <h2 className="section-title">
+                  <i className="fas fa-star"></i>
+                  Sản Phẩm Nổi Bật
+                </h2>
+                <p className="section-description">
+                  Những sản phẩm gaming gear được yêu thích nhất
+                </p>
+              </div>
 
-            <ProductCarousel
-              products={featuredProducts}
-              slidesPerView={4}
-              spaceBetween={24}
-              showNavigation={true}
-              showPagination={false}
-              loop={true}
-            />
+              <ProductCarousel
+                products={featuredProducts}
+                slidesPerView={4}
+                spaceBetween={24}
+                showNavigation={true}
+                showPagination={false}
+                loop={true}
+              />
 
-            <div className="section-footer">
-              <Button variant="secondary" onClick={() => navigate("/products")}>
-                Xem tất cả sản phẩm <i className="fas fa-arrow-right"></i>
-              </Button>
-            </div>
-          </section>
-        )}
-      </section>
+              <div className="section-footer">
+                <Button variant="secondary" onClick={() => navigate("/products")}>
+                  Xem tất cả sản phẩm <i className="fas fa-arrow-right"></i>
+                </Button>
+              </div>
+            </section>
+          ) : (
+            <section className="content-section">
+              <div className="section-header">
+                <h2 className="section-title">
+                  <i className="fas fa-star"></i>
+                  Sản Phẩm Nổi Bật
+                </h2>
+                <p className="section-description">
+                  Những sản phẩm gaming gear được yêu thích nhất
+                </p>
+              </div>
+              <SkeletonCarousel items={4} />
+            </section>
+          )}
+        </section>
       </LazySection>
 
       {/* Free Digital Products Section - Lazy Load */}
@@ -256,38 +241,52 @@ const HomePage = () => {
           </section>
         }
       >
-        <section className="digital-section">{digitalProducts.length > 0 && (
-          <section className="content-section">
-            <div className="section-header">
-              <h2 className="section-title">
-                <i className="fas fa-download"></i>
-                Tải Miễn Phí
-              </h2>
-              <p className="section-description">
-                Wallpaper, preset và template chất lượng cao - miễn phí
-              </p>
-            </div>
+        <section className="digital-section">
+          {digitalProducts.length > 0 ? (
+            <section className="content-section">
+              <div className="section-header">
+                <h2 className="section-title">
+                  <i className="fas fa-download"></i>
+                  Tải Miễn Phí
+                </h2>
+                <p className="section-description">
+                  Wallpaper, preset và template chất lượng cao - miễn phí
+                </p>
+              </div>
 
-            <ProductCarousel
-              products={digitalProducts}
-              slidesPerView={4}
-              spaceBetween={24}
-              showNavigation={true}
-              showPagination={false}
-              loop={true}
-            />
+              <ProductCarousel
+                products={digitalProducts}
+                slidesPerView={4}
+                spaceBetween={24}
+                showNavigation={true}
+                showPagination={false}
+                loop={true}
+              />
 
-            <div className="section-footer">
-              <Button
-                variant="primary"
-                onClick={() => navigate("/products?category=digital")}
-              >
-                Khám phá thêm <i className="fas fa-arrow-right"></i>
-              </Button>
-            </div>
-          </section>
-        )}
-      </section>
+              <div className="section-footer">
+                <Button
+                  variant="primary"
+                  onClick={() => navigate("/products?category=digital")}
+                >
+                  Khám phá thêm <i className="fas fa-arrow-right"></i>
+                </Button>
+              </div>
+            </section>
+          ) : (
+            <section className="content-section">
+              <div className="section-header">
+                <h2 className="section-title">
+                  <i className="fas fa-download"></i>
+                  Tải Miễn Phí
+                </h2>
+                <p className="section-description">
+                  Wallpaper, preset và template chất lượng cao - miễn phí
+                </p>
+              </div>
+              <SkeletonCarousel items={4} />
+            </section>
+          )}
+        </section>
       </LazySection>
 
       {/* Categories Section - Lazy Load */}
