@@ -8,15 +8,21 @@ import { getFirestore, collection, doc, setDoc, writeBatch } from 'firebase/fire
 import * as fs from 'fs';
 import * as path from 'path';
 
-// Firebase config
+// SECURITY: Use environment variables - NEVER hardcode API keys!
+// Create a .env file in project root with your Firebase credentials
 const firebaseConfig = {
-  apiKey: "AIzaSyAUzNjE73wLYUi29iOKiLaCfsyvHWHKtmc",
-  authDomain: "uside-shop.firebaseapp.com",
-  projectId: "uside-shop",
-  storageBucket: "uside-shop.firebasestorage.app",
-  messagingSenderId: "983690216457",
-  appId: "1:983690216457:web:b7167d0b270e5b172a24d8"
+  apiKey: process.env.VITE_FIREBASE_API_KEY,
+  authDomain: process.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.VITE_FIREBASE_APP_ID
 };
+
+// Validate config
+if (!firebaseConfig.apiKey || !firebaseConfig.projectId) {
+  throw new Error('Firebase configuration missing! Please set VITE_FIREBASE_* environment variables.');
+}
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
