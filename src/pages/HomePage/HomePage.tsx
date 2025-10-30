@@ -1,12 +1,13 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useProducts } from "../../hooks/useProducts";
 import { useProductStore } from "../../store/productStore";
 import { DataSyncIndicator } from "../../components/DataSyncIndicator/DataSyncIndicator";
 import ProductCarousel from "../../components/ProductCarousel/ProductCarousel";
+import { LazySection } from "../../components/LazySection";
+import { SkeletonCarousel, SkeletonCard } from "../../components/Skeleton";
 import { TextType } from "../../components/TextType";
 import Button from "../../components/Button";
-import { ElectricBorder } from '../../components';
 import "./HomePage.css";
 
 const HomePage = () => {
@@ -14,12 +15,23 @@ const HomePage = () => {
   const { products, loading, error } = useProducts();
   const { setProducts, getFeaturedProducts, getDigitalProducts } =
     useProductStore();
+  const [loadSpline, setLoadSpline] = useState(false);
 
   useEffect(() => {
     if (products.length > 0) {
       setProducts(products);
     }
   }, [products, setProducts]);
+
+  // Lazy load Spline after Hero content renders
+  useEffect(() => {
+    // Use requestIdleCallback for better performance, fallback to setTimeout
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(() => setLoadSpline(true), { timeout: 2000 });
+    } else {
+      setTimeout(() => setLoadSpline(true), 1000);
+    }
+  }, []);
 
   const featuredProducts = getFeaturedProducts();
   const digitalProducts = getDigitalProducts().filter((p) => p.is_free);
@@ -77,13 +89,18 @@ const HomePage = () => {
             </p>
           </div>
           <div className="hero-visual">
-            <div
-              className="cloud-image"
-              dangerouslySetInnerHTML={{
-                __html:
-                  '<spline-viewer loading-anim-type="none" url="https://prod.spline.design/ZXsHBKR839LKz3yn/scene.splinecode"></spline-viewer>',
-              }}
-            />
+            <div className="cloud-image">
+              {loadSpline ? (
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html:
+                      '<spline-viewer loading-anim-type="none" url="https://prod.spline.design/ZXsHBKR839LKz3yn/scene.splinecode"></spline-viewer>',
+                  }}
+                />
+              ) : (
+                <div className="spline-placeholder" />
+              )}
+            </div>
             <div className="contact-overlay">
               <h3>Cần hỗ trợ mua sắm?</h3>
               <a href="#contact">
@@ -164,9 +181,29 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Featured Products Section */}
-      <section className="featured-section">
-        {featuredProducts.length > 0 && (
+      {/* Featured Products Section - Lazy Load */}
+      <LazySection
+        threshold={0.1}
+        rootMargin="100px"
+        fallback={
+          <section className="featured-section">
+            <div className="content-section">
+              <div className="section-header">
+                <h2 className="section-title">
+                  <i className="fas fa-star"></i>
+                  Sản Phẩm Nổi Bật
+                </h2>
+                <p className="section-description">
+                  Những sản phẩm gaming gear được yêu thích nhất
+                </p>
+              </div>
+              <SkeletonCarousel items={4} />
+            </div>
+          </section>
+        }
+      >
+        <section className="featured-section">
+          {featuredProducts.length > 0 && (
           <section className="content-section">
             <div className="section-header">
               <h2 className="section-title">
@@ -195,19 +232,31 @@ const HomePage = () => {
           </section>
         )}
       </section>
+      </LazySection>
 
-      {/* Free Digital Products Section */}
-      <ElectricBorder
-        color="var(--accent-primary)"
-        speed={1}
-        chaos={1}
-        thickness={2}
-        className="line-electric"
+      {/* Free Digital Products Section - Lazy Load */}
+      <hr className="line"></hr>
+      <LazySection
+        threshold={0.1}
+        rootMargin="100px"
+        fallback={
+          <section className="digital-section">
+            <div className="content-section">
+              <div className="section-header">
+                <h2 className="section-title">
+                  <i className="fas fa-download"></i>
+                  Tải Miễn Phí
+                </h2>
+                <p className="section-description">
+                  Wallpaper, preset và template chất lượng cao - miễn phí
+                </p>
+              </div>
+              <SkeletonCarousel items={4} />
+            </div>
+          </section>
+        }
       >
-        <hr className="line"></hr>
-      </ElectricBorder>
-      <section className="digital-section">
-        {digitalProducts.length > 0 && (
+        <section className="digital-section">{digitalProducts.length > 0 && (
           <section className="content-section">
             <div className="section-header">
               <h2 className="section-title">
@@ -239,9 +288,27 @@ const HomePage = () => {
           </section>
         )}
       </section>
+      </LazySection>
 
-      {/* Categories Section */}
-      <section className="categories-section">
+      {/* Categories Section - Lazy Load */}
+      <LazySection
+        threshold={0.2}
+        rootMargin="50px"
+        fallback={
+          <section className="categories-section">
+            <div className="categories-wrapper">
+              <div className="section-header">
+                <h2 className="section-title">
+                  <i className="fas fa-th-large"></i>
+                  Danh Mục Sản Phẩm
+                </h2>
+              </div>
+              <SkeletonCard count={2} />
+            </div>
+          </section>
+        }
+      >
+        <section className="categories-section">
         <div className="categories-wrapper">
           <div className="section-header">
             <h2 className="section-title">
@@ -277,9 +344,28 @@ const HomePage = () => {
           </div>
         </div>
       </section>
+      </LazySection>
 
-      {/* Contact Section */}
-      <section id="contact" className="contact-section">
+      {/* Contact Section - Lazy Load */}
+      <LazySection
+        threshold={0.3}
+        rootMargin="0px"
+        fallback={
+          <section id="contact" className="contact-section">
+            <div className="section-header">
+              <h2 className="section-title">
+                <i className="fas fa-comments"></i>
+                Liên Hệ & Thanh Toán
+              </h2>
+              <p className="section-description">
+                Chọn phương thức liên hệ phù hợp với bạn
+              </p>
+            </div>
+            <SkeletonCard count={2} />
+          </section>
+        }
+      >
+        <section id="contact" className="contact-section">
         <div className="section-header">
           <h2 className="section-title">
             <i className="fas fa-comments"></i>
@@ -310,6 +396,7 @@ const HomePage = () => {
           </div>
         </div>
       </section>
+      </LazySection>
     </div>
   );
 };

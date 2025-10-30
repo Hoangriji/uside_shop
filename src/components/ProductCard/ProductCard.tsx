@@ -1,7 +1,6 @@
 import React from 'react';
 import Badge from '../Badge';
 import { WishlistButton } from '../WishlistButton';
-import { ElectricBorder } from '../ElectricBorder';
 import './ProductCard.css';
 
 interface Product {
@@ -29,19 +28,14 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onViewDetails
   };
 
   return (
-    <ElectricBorder 
-      color="var(--accent-primary)" 
-      speed={1} 
-      chaos={1} 
-      thickness={2}
-      className="product-card-electric"
-    >
-      <div className="product-card" onClick={handleCardClick}>
-        <div className="card-image-container">
+    <div className="product-card" onClick={handleCardClick}>
+      <div className="card-image-container">
           <img 
             src={product.image} 
             alt={product.name}
             className="card-image"
+            loading="lazy"
+            decoding="async"
           />
         </div>
 
@@ -82,6 +76,5 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onViewDetails
           </div>
         </div>
       </div>
-    </ElectricBorder>
   );
 };

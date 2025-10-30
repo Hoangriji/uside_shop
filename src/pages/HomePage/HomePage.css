@@ -160,6 +160,30 @@
   pointer-events: none;
 }
 
+/* Spline Placeholder - Fast loading fallback */
+.spline-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    rgba(99, 102, 241, 0.1) 0%,
+    rgba(139, 92, 246, 0.1) 50%,
+    rgba(99, 102, 241, 0.1) 100%
+  );
+  background-size: 200% 200%;
+  animation: gradientShift 3s ease infinite;
+  border-radius: var(--border-radius-lg);
+}
+
+@keyframes gradientShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
 .cloud-image spline-viewer {
   width: 100%;
   height: 100%;
@@ -313,13 +337,6 @@
 
 /* Digital Products Section */
 
-.home-page .line-electric {
-  width: 80%;
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 0;
-}
-
 hr.line {
   border: none;
   height: 3px;
@@ -327,7 +344,7 @@ hr.line {
   max-width: 1440px;
   margin: 0 auto;
   padding: 0;
-  background: var(--light-secondary);
+  background: var(--accent-primary);
   box-shadow: none;
   display: block;
 }

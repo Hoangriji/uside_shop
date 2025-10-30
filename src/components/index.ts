@@ -10,5 +10,6 @@ export { PaymentOptions } from './PaymentOptions';
 export { ProductCard } from './ProductCard';
 export { TextType } from './TextType';
 export { ClickSpark } from './ClickSpark';
-export { ElectricBorder } from './ElectricBorder';
 export { AnimatedList } from './AnimatedList';
+export { LazySection } from './LazySection';
+export { SkeletonCarousel, SkeletonCard } from './Skeleton';

@@ -1,29 +1,33 @@
-/* Electric Border Wrapper */
-.product-card-electric {
-  border-radius: var(--border-radius-lg);
+/* Product Card */
+.product-card {
   width: 300px;
   min-width: 300px;
   max-width: 300px;
-}
-
-.product-card {
-  width: 100%;
   height: 370px;
   min-height: 370px;
   max-height: 370px;  
   background: var(--theme-surface);
   border-radius: var(--border-radius-lg);
   overflow: hidden; 
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
   cursor: pointer;
-  border: 1px solid var(--accent-primary);
+  border: 2px solid var(--accent-primary);
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.3),
+    0 0 20px rgba(var(--accent-rgb), 0.2);
+  will-change: transform;
+  contain: layout style paint;
 }
 
 .product-card:hover {
-  transform: translateY(-2px);
+  transform: translateY(-5px);
+  box-shadow: 
+    0 8px 24px rgba(0, 0, 0, 0.4),
+    0 0 30px rgba(var(--accent-rgb), 0.3);
+  border-color: var(--accent-primary);
 }
 
 /* Product Image */
@@ -39,6 +43,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  contain: strict;
 }
 
 .card-image {
@@ -46,6 +51,7 @@
   height: 100%;
   object-fit: contain;
   transition: transform 0.3s ease;
+  will-change: transform;
   padding: 1rem;
 }
 
@@ -143,14 +149,10 @@
 
 /* Desktop - Under 1440px */
 @media (max-width: 1440px) {
-  .product-card-electric {
+  .product-card {
     width: 290px;
     min-width: 290px;
     max-width: 290px;
-  }
-  
-  .product-card {
-    width: 100%;
     height: 360px;
     min-height: 360px;
     max-height: 360px;
@@ -198,14 +200,10 @@
 
 /* Desktop - Under 1280px */
 @media (max-width: 1280px) {
-  .product-card-electric {
+  .product-card {
     width: 280px;
     min-width: 280px;
     max-width: 280px;
-  }
-  
-  .product-card {
-    width: 100%;
     height: 350px;
     min-height: 350px;
     max-height: 350px;
@@ -253,14 +251,10 @@
 
 /* Tablet - Under 1000px */
 @media (max-width: 1000px) {
-  .product-card-electric {
+  .product-card {
     width: 270px;
     min-width: 270px;
     max-width: 270px;
-  }
-  
-  .product-card {
-    width: 100%;
     height: 340px;
     min-height: 340px;
     max-height: 340px;
@@ -308,14 +302,10 @@
 
 /* Tablet - Under 800px */
 @media (max-width: 800px) {
-  .product-card-electric {
+  .product-card {
     width: 260px;
     min-width: 260px;
     max-width: 260px;
-  }
-  
-  .product-card {
-    width: 100%;
     height: 330px;
     min-height: 330px;
     max-height: 330px;
@@ -364,14 +354,10 @@
 
 /* Mobile - Under 600px */
 @media (max-width: 600px) {
-  .product-card-electric {
+  .product-card {
     width: 100%;
     min-width: 240px;
     max-width: 100%;
-  }
-  
-  .product-card {
-    width: 100%;
     height: 320px;
     min-height: 320px;
     max-height: 320px;
@@ -429,14 +415,10 @@
 
 /* Mobile - Under 400px */
 @media (max-width: 400px) {
-  .product-card-electric {
+  .product-card {
     width: 100%;
     min-width: 220px;
     max-width: 100%;
-  }
-  
-  .product-card {
-    width: 100%;
     height: 310px;
     min-height: 310px;
     max-height: 310px;
@@ -494,14 +476,10 @@
 
 /* Mobile - Under 350px */
 @media (max-width: 350px) {
-  .product-card-electric {
+  .product-card {
     width: 100%;
     min-width: 200px;
     max-width: 100%;
-  }
-  
-  .product-card {
-    width: 100%;
     height: 300px;
     min-height: 300px;
     max-height: 300px;
