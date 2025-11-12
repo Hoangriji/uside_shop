@@ -117,7 +117,6 @@ const Header: React.FC<HeaderProps> = ({
               type="button"
               className="search-button"
               onClick={() => {
-                // focus the input and open the search area
                 setSearchOpen(true);
                 setTimeout(() => inputRef.current?.focus(), 0);
               }}

@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, FreeMode } from 'swiper/modules';
 import { SimpleProductCard } from '../SimpleProductCard/SimpleProductCard';
 import type { Product } from '../../types';
-import { useRef } from 'react';
+import { useRef, memo, useCallback } from 'react';
 import type { SwiperRef } from 'swiper/react';
 
 // Import Swiper styles
@@ -22,7 +22,7 @@ interface ProductCarouselProps {
   loop?: boolean;
 }
 
-const ProductCarousel: React.FC<ProductCarouselProps> = ({
+const ProductCarousel: React.FC<ProductCarouselProps> = memo(({
   products,
   slidesPerView = 4,
   spaceBetween = 24,
@@ -33,17 +33,17 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
   const navigate = useNavigate();
   const swiperRef = useRef<SwiperRef>(null);
 
-  const handlePrev = () => {
+  const handlePrev = useCallback(() => {
     if (swiperRef.current && swiperRef.current.swiper) {
       swiperRef.current.swiper.slidePrev();
     }
-  };
+  }, []);
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     if (swiperRef.current && swiperRef.current.swiper) {
       swiperRef.current.swiper.slideNext();
     }
-  };
+  }, []);
 
   return (
     <div className="product-carousel">
@@ -111,6 +111,8 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
       </Swiper>
     </div>
   );
-};
+});
+
+ProductCarousel.displayName = 'ProductCarousel';
 
 export default ProductCarousel;

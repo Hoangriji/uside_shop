@@ -30,6 +30,7 @@ export const SimpleProductCard: React.FC<SimpleProductCardProps> = ({
     id: databaseProduct.id, // Keep as string from database
     name: databaseProduct.name,
     price: databaseProduct.price_vnd,
+    originalPrice: databaseProduct.original_price_vnd,
     image: databaseProduct.images?.[0] || 'https://via.placeholder.com/300x200?text=No+Image',
     category: databaseProduct.category,
     description: databaseProduct.description,
@@ -40,7 +41,10 @@ export const SimpleProductCard: React.FC<SimpleProductCardProps> = ({
     <ProductCard 
       product={{
         ...product,
-        stockStatus: databaseProduct.stock_status
+        stockStatus: databaseProduct.stock_status,
+        specs: databaseProduct.specs,
+        features: databaseProduct.features,
+        brand: databaseProduct.brand
       }} 
       onViewDetails={onViewDetails}
     />

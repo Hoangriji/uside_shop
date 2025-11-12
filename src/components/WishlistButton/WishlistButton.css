@@ -1,5 +1,5 @@
 .wishlist-btn {
-  background: rgba(255, 255, 255, 0.9);
+  background: var(--font-secondary, rgba(238, 238, 238, 0.95));
   border: none;
   border-radius: 50%;
   width: 36px;
@@ -9,27 +9,33 @@
   justify-content: center;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   position: relative;
+  z-index: 11;
 }
 
 .wishlist-btn:hover {
-  background: #fff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  background: var(--font-primary, #fff);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  transform: scale(1.05);
 }
 
 .wishlist-btn i {
-  color: #666;
+  color: #000;
   font-size: 18px;
   transition: all 0.3s ease;
 }
 
 .wishlist-btn:hover i {
-  color: #ff6b6b;
+  color: var(--highlight-secondary, #FF3333);
+}
+
+.wishlist-btn.active {
+  background: var(--font-primary, #fff);
 }
 
 .wishlist-btn.active i {
-  color: #ff6b6b;
+  color: var(--highlight-secondary, #FF3333);
 }
 
 .wishlist-btn span {
@@ -61,12 +67,13 @@
 
 /* Size variants */
 .wishlist-btn.sm {
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
+  padding: 5px;
 }
 
 .wishlist-btn.sm i {
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .wishlist-btn.sm.full {

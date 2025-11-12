@@ -1,0 +1,85 @@
+/* Skeleton Card - Category cards placeholder */
+.skeleton-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  width: 100%;
+}
+
+.skeleton-card {
+  background: var(--surface-color, #1a1a1a);
+  border-radius: 16px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  contain: layout style paint;
+}
+
+.skeleton-card__icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #2a2a2a 25%, #333 50%, #2a2a2a 75%);
+  background-size: 200% 100%;
+}
+
+.skeleton-card__title {
+  width: 60%;
+  height: 28px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #2a2a2a 25%, #333 50%, #2a2a2a 75%);
+  background-size: 200% 100%;
+}
+
+.skeleton-card__description {
+  width: 80%;
+  height: 40px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #2a2a2a 25%, #333 50%, #2a2a2a 75%);
+  background-size: 200% 100%;
+}
+
+.skeleton-card__button {
+  width: 120px;
+  height: 44px;
+  border-radius: 8px;
+  margin-top: 8px;
+  background: linear-gradient(90deg, #2a2a2a 25%, #333 50%, #2a2a2a 75%);
+  background-size: 200% 100%;
+}
+
+/* Shimmer animation */
+.shimmer {
+  animation: shimmer 2s infinite linear;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .skeleton-cards {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .skeleton-card {
+    padding: 24px;
+  }
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  .shimmer {
+    animation: none;
+    opacity: 0.5;
+  }
+}

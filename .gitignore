@@ -137,3 +137,5 @@ PERSONAL_README.md
 *.bak
 *.backup
 
+# Ignore the sample folder
+sample/

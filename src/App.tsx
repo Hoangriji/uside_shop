@@ -1,17 +1,41 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
-import HomePage from './pages/HomePage/HomePage';
-import ProductsPage from './pages/ProductsPage/ProductsPage';
-import AboutPage from './pages/AboutPage/AboutPage';
-import ContactPage from './pages/ContactPage/ContactPage';
-import WishlistPage from './pages/WishlistPage/WishlistPage';
-import ProductDetailPage from './pages/ProductDetailPage/ProductDetailPage';
-import DashboardApp from './pages/DashboardPage/DashboardApp';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import { Header } from './components/Header';
 import { ScrollToTop } from './components/ScrollToTop';
+import { ClickSpark } from './components/ClickSpark';
 import { getWishlistCount } from './utils/wishlist';
 import { useProductStore } from './store/productStore';
+import HomePage from './pages/HomePage/HomePage'; // EAGER LOAD for instant Hero
 import './styles/global.css';
+
+// Lazy load non-critical pages
+const ProductsPage = lazy(() => import('./pages/ProductsPage/ProductsPage'));
+const AboutPage = lazy(() => import('./pages/AboutPage/AboutPage'));
+const ContactPage = lazy(() => import('./pages/ContactPage/ContactPage'));
+const WishlistPage = lazy(() => import('./pages/WishlistPage/WishlistPage'));
+const ProductDetailPage = lazy(() => import('./pages/ProductDetailPage/ProductDetailPage'));
+const DashboardApp = lazy(() => import('./pages/DashboardPage/DashboardApp'));
+
+// Loading fallback component
+const PageLoader = () => (
+  <div style={{
+    minHeight: '100vh',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    background: 'var(--theme-background)'
+  }}>
+    <div style={{
+      width: '40px',
+      height: '40px',
+      border: '3px solid var(--theme-border)',
+      borderTop: '3px solid var(--accent-primary)',
+      borderRadius: '50%',
+      animation: 'spin 1s linear infinite'
+    }}></div>
+  </div>
+);
 
 const App: React.FC = () => {
   const location = useLocation();
@@ -55,27 +79,54 @@ const App: React.FC = () => {
 
   // If it's a dashboard route, render dashboard app without main layout
   if (isDashboardRoute) {
-    return <DashboardApp />;
+    return (
+      <Suspense fallback={<PageLoader />}>
+        <DashboardApp />
+      </Suspense>
+    );
   }
 
   return (
-    <div className="App">
-      <Header 
-        currentPage={currentPage} 
-        wishlistCount={wishlistCount}
-        currentAccentColor={currentAccentColor}
-        setCurrentAccentColor={setCurrentAccentColor}
-      />
-      <ScrollToTop />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/products" element={<ProductsPage />} />
-        <Route path="/product/:id" element={<ProductDetailPage />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/contact" element={<ContactPage />} />
-        <Route path="/wishlist" element={<WishlistPage />} />
-      </Routes>
-    </div>
+    <ClickSpark>
+      <div className="App">
+        <Header 
+          currentPage={currentPage} 
+          wishlistCount={wishlistCount}
+          currentAccentColor={currentAccentColor}
+          setCurrentAccentColor={setCurrentAccentColor}
+        />
+        <ScrollToTop />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/products" element={
+            <Suspense fallback={<PageLoader />}>
+              <ProductsPage />
+            </Suspense>
+          } />
+          <Route path="/product/:id" element={
+            <Suspense fallback={<PageLoader />}>
+              <ProductDetailPage />
+            </Suspense>
+          } />
+          <Route path="/about" element={
+            <Suspense fallback={<PageLoader />}>
+              <AboutPage />
+            </Suspense>
+          } />
+          <Route path="/contact" element={
+            <Suspense fallback={<PageLoader />}>
+              <ContactPage />
+            </Suspense>
+          } />
+          <Route path="/wishlist" element={
+            <Suspense fallback={<PageLoader />}>
+              <WishlistPage />
+            </Suspense>
+          } />
+        </Routes>
+        <SpeedInsights />
+      </div>
+    </ClickSpark>
   );
 };
 

@@ -92,8 +92,8 @@
     -8px -8px 16px var(--theme-inset-light),
     8px 8px 16px var(--theme-inset-dark);
   --neumorphic-shadow-hover: 
-    -12px -12px 24px var(--theme-inset-hover-light),
-    12px 12px 24px var(--theme-inset-hover-dark);
+    -10px -10px 20px var(--theme-inset-hover-light),
+    10px 10px 20px var(--theme-inset-hover-dark);
   --neumorphic-inset: 
     inset -4px -4px 8px var(--theme-inset-light),
     inset 4px 4px 8px var(--theme-inset-dark);
@@ -291,4 +291,182 @@ body {
 
 .btn-icon:active {
   transform: translateY(-1px) scale(1.05);
+}
+
+/* ========================================
+   RESPONSIVE BREAKPOINTS & UTILITIES
+   ======================================== */
+
+/* Breakpoints:
+   Desktop: < 1440px, < 1280px
+   Tablet: < 1000px, < 800px
+   Mobile: < 600px, < 400px, < 350px
+*/
+
+/* Hide spline-viewer on tablet and mobile */
+@media (max-width: 1000px) {
+  .cloud-image {
+    display: none !important;
+  }
+}
+
+/* Desktop - Under 1440px */
+@media (max-width: 1440px) {
+  :root {
+    --container-padding: 2rem;
+  }
+  
+  body {
+    font-size: 15px;
+  }
+  
+  .btn-primary,
+  .btn-secondary {
+    padding: 12px 24px;
+    font-size: 13px;
+  }
+  
+  .btn-icon {
+    width: 48px;
+    height: 48px;
+    font-size: 17px;
+  }
+}
+
+/* Desktop - Under 1280px */
+@media (max-width: 1280px) {
+  :root {
+    --container-padding: 1.5rem;
+  }
+  
+  body {
+    font-size: 14px;
+  }
+  
+  .btn-primary,
+  .btn-secondary {
+    padding: 11px 22px;
+    font-size: 12.5px;
+  }
+  
+  .btn-icon {
+    width: 46px;
+    height: 46px;
+    font-size: 16px;
+  }
+}
+
+/* Tablet - Under 1000px */
+@media (max-width: 1000px) {
+  :root {
+    --container-padding: 1.25rem;
+  }
+  
+  body {
+    font-size: 14px;
+  }
+  
+  .btn-primary,
+  .btn-secondary {
+    padding: 10px 20px;
+    font-size: 12px;
+  }
+  
+  .btn-icon {
+    width: 44px;
+    height: 44px;
+    font-size: 15px;
+  }
+}
+
+/* Tablet - Under 800px */
+@media (max-width: 800px) {
+  :root {
+    --container-padding: 1rem;
+  }
+  
+  body {
+    font-size: 13px;
+  }
+  
+  .btn-primary,
+  .btn-secondary {
+    padding: 9px 18px;
+    font-size: 11.5px;
+  }
+  
+  .btn-icon {
+    width: 42px;
+    height: 42px;
+    font-size: 14px;
+  }
+}
+
+/* Mobile - Under 600px */
+@media (max-width: 600px) {
+  :root {
+    --container-padding: 0.875rem;
+  }
+  
+  body {
+    font-size: 13px;
+  }
+  
+  .btn-primary,
+  .btn-secondary {
+    padding: 8px 16px;
+    font-size: 11px;
+  }
+  
+  .btn-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 13px;
+  }
+}
+
+/* Mobile - Under 400px */
+@media (max-width: 400px) {
+  :root {
+    --container-padding: 0.75rem;
+  }
+  
+  body {
+    font-size: 12px;
+  }
+  
+  .btn-primary,
+  .btn-secondary {
+    padding: 7px 14px;
+    font-size: 10.5px;
+  }
+  
+  .btn-icon {
+    width: 38px;
+    height: 38px;
+    font-size: 12px;
+  }
+}
+
+/* Mobile - Under 350px */
+@media (max-width: 350px) {
+  :root {
+    --container-padding: 0.625rem;
+  }
+  
+  body {
+    font-size: 11px;
+  }
+  
+  .btn-primary,
+  .btn-secondary {
+    padding: 6px 12px;
+    font-size: 10px;
+  }
+  
+  .btn-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 11px;
+  }
 }

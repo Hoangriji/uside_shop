@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useProducts } from '../../../hooks/useProducts';
 import { useCategories } from '../../../hooks/useCategories';
 import { ActivityLogsService } from '../../../services/activityLogsService';
+import { AnimatedList } from '../../../components/AnimatedList';
 import type { Product, Category, ActivityLog } from '../../../types';
 
 interface CategoryDistribution {
@@ -293,11 +294,16 @@ const DashboardOverview: React.FC = () => {
           <div className="chart-content">
             <div className="activity-list">
               {activityLogs && activityLogs.length > 0 ? (
-                activityLogs
-                  .map((log: ActivityLog) => {
+                <AnimatedList<ActivityLog>
+                  items={activityLogs}
+                  showGradients={true}
+                  enableArrowNavigation={false}
+                  displayScrollbar={true}
+                  itemClassName="dashboard-activity-item"
+                  renderItem={(log: ActivityLog) => {
                     const style = getActivityStyle(log.action);
                     return (
-                      <div key={log.id} className="activity-notification">
+                      <div className="activity-notification">
                         <div className="activity-icon-wrapper" style={{ backgroundColor: `${style.color}20` }}>
                           <i className={`fas ${style.icon}`} style={{ color: style.color }}></i>
                         </div>
@@ -318,7 +324,8 @@ const DashboardOverview: React.FC = () => {
                         </div>
                       </div>
                     );
-                  })
+                  }}
+                />
               ) : (
                 <div className="empty-chart">
                   <i className="fas fa-inbox"></i>
