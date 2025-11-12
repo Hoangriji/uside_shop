@@ -96,15 +96,13 @@
   gap: 0.5rem;
   padding: 0.75rem 0.5rem;
   background: var(--theme-surface);
-  border: 1px solid var(--accent-border);
+  border: 2px solid var(--accent-primary);
   border-radius: 1rem;
   cursor: pointer;
   transition: all var(--transition-smooth);
-  box-shadow:  -1px -2px 4px var(--accent-glow), 3px 4px 10px rgba(0, 0, 0, 0.8);
 }
 
 .category-item:hover {
-  border-color: var(--accent-primary);
   transform: translateY(-5px);
   box-shadow: 0 4px 12px var(--accent-glow),
     inset -1px -2px 8px rgba(255, 255, 255, 0.2),
