@@ -47,7 +47,6 @@ const Header: React.FC<HeaderProps> = ({
   const navigationItems = [
     { id: 'home', label: 'Trang Chủ', icon: 'fas fa-home', path: '/' },
     { id: 'products', label: 'Sản Phẩm', icon: 'fas fa-th-large', path: '/products' },
-    { id: 'about', label: 'Giới Thiệu', icon: 'fas fa-info-circle', path: '/about' },
     { id: 'contact', label: 'Liên Hệ', icon: 'fas fa-envelope', path: '/contact' }
   ];
 

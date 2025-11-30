@@ -1,17 +1,16 @@
-#root {#root {
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
 
-  width: 100%;  width: 100%;
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 
-  min-height: 100vh;  min-height: 100vh;
-
-}}
-
-
-
-.app-container {.app-container {
-
-  padding-top: 120px;  padding-top: 120px;
-
-  /* Space for floating header */}
-
+.app-container {
+  padding-top: 120px;
+  /* Space for floating header */
+  flex: 1;
 }

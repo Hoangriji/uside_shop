@@ -1,15 +1,6 @@
 /* Import global theme variables */
 @import './styles/global.css';
 
-/* Hide Spline watermark globally */
-spline-viewer::part(logo),
-spline-viewer #logo {
-  display: none !important;
-  opacity: 0 !important;
-  visibility: hidden !important;
-  pointer-events: none !important;
-}
-
 /* Additional utility variables for backward compatibility */
 :root {
   /* Legacy color names - mapped to theme colors */

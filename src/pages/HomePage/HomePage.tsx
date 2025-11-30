@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useProducts } from "../../hooks/useProducts";
 import { useProductStore } from "../../store/productStore";
@@ -13,7 +13,6 @@ const HomePage = () => {
   const { products } = useProducts();
   const { setProducts, getFeaturedProducts, getDigitalProducts } =
     useProductStore();
-  const [loadSpline, setLoadSpline] = useState(false);
 
   // Load products in background (non-blocking)
   useEffect(() => {
@@ -21,15 +20,6 @@ const HomePage = () => {
       setProducts(products);
     }
   }, [products, setProducts]);
-
-  // Lazy load Spline after Hero renders
-  useEffect(() => {
-    if ('requestIdleCallback' in window) {
-      requestIdleCallback(() => setLoadSpline(true), { timeout: 2000 });
-    } else {
-      setTimeout(() => setLoadSpline(true), 1000);
-    }
-  }, []);
 
   // Memoize expensive computations
   const featuredProducts = useMemo(() => {
@@ -59,27 +49,6 @@ const HomePage = () => {
               Khám phá bộ sưu tập gaming hardware chất lượng cao và digital
               products.
             </p>
-          </div>
-          <div className="hero-visual">
-            <div className="cloud-image">
-              {loadSpline ? (
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html:
-                      '<spline-viewer loading-anim-type="none" url="https://prod.spline.design/ZXsHBKR839LKz3yn/scene.splinecode"></spline-viewer>',
-                  }}
-                />
-              ) : (
-                <div className="spline-placeholder" />
-              )}
-            </div>
-            <div className="contact-overlay">
-              <h3>Cần hỗ trợ mua sắm?</h3>
-              <a href="#contact">
-                <i className="fab fa-facebook"></i>
-                Liên hệ với Support Bot
-              </a>
-            </div>
           </div>
         </div>
 
@@ -220,7 +189,7 @@ const HomePage = () => {
       </LazySection>
 
       {/* Free Digital Products Section - Lazy Load */}
-      <hr className="line"></hr>
+      {/* <hr className="line"></hr> */}
       <LazySection
         threshold={0.1}
         rootMargin="100px"
@@ -289,61 +258,7 @@ const HomePage = () => {
         </section>
       </LazySection>
 
-      {/* Categories Section - Lazy Load */}
-      <LazySection
-        threshold={0.2}
-        rootMargin="50px"
-        fallback={
-          <section className="categories-section">
-            <div className="categories-wrapper">
-              <div className="section-header">
-                <h2 className="section-title">
-                  <i className="fas fa-th-large"></i>
-                  Danh Mục Sản Phẩm
-                </h2>
-              </div>
-              <SkeletonCard count={2} />
-            </div>
-          </section>
-        }
-      >
-        <section className="categories-section">
-        <div className="categories-wrapper">
-          <div className="section-header">
-            <h2 className="section-title">
-              <i className="fas fa-th-large"></i>
-              Danh Mục Sản Phẩm
-            </h2>
-          </div>
 
-          <div className="categories-grid">
-            <div
-              className="category-card hardware"
-              onClick={() => navigate("/products")}
-            >
-              <div className="category-icon">
-                <i className="fas fa-gamepad"></i>
-              </div>
-              <h3>Gaming Hardware</h3>
-              <p>Chuột, bàn phím, tai nghe gaming chất lượng cao</p>
-              <Button variant="primary">Khám phá</Button>
-            </div>
-
-            <div
-              className="category-card digital"
-              onClick={() => navigate("/products?category=digital")}
-            >
-              <div className="category-icon">
-                <i className="fas fa-download"></i>
-              </div>
-              <h3>Digital Products</h3>
-              <p>Wallpaper, preset, template miễn phí</p>
-              <Button variant="secondary">Khám phá</Button>
-            </div>
-          </div>
-        </div>
-      </section>
-      </LazySection>
 
       {/* Contact Section - Lazy Load */}
       <LazySection

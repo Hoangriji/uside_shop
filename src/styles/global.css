@@ -303,12 +303,7 @@ body {
    Mobile: < 600px, < 400px, < 350px
 */
 
-/* Hide spline-viewer on tablet and mobile */
-@media (max-width: 1000px) {
-  .cloud-image {
-    display: none !important;
-  }
-}
+
 
 /* Desktop - Under 1440px */
 @media (max-width: 1440px) {

@@ -4,6 +4,7 @@ import { SpeedInsights } from '@vercel/speed-insights/react';
 import { Header } from './components/Header';
 import { ScrollToTop } from './components/ScrollToTop';
 import { ClickSpark } from './components/ClickSpark';
+import { Footer } from './components';
 import { getWishlistCount } from './utils/wishlist';
 import { useProductStore } from './store/productStore';
 import HomePage from './pages/HomePage/HomePage'; // EAGER LOAD for instant Hero
@@ -11,7 +12,6 @@ import './styles/global.css';
 
 // Lazy load non-critical pages
 const ProductsPage = lazy(() => import('./pages/ProductsPage/ProductsPage'));
-const AboutPage = lazy(() => import('./pages/AboutPage/AboutPage'));
 const ContactPage = lazy(() => import('./pages/ContactPage/ContactPage'));
 const WishlistPage = lazy(() => import('./pages/WishlistPage/WishlistPage'));
 const ProductDetailPage = lazy(() => import('./pages/ProductDetailPage/ProductDetailPage'));
@@ -108,11 +108,6 @@ const App: React.FC = () => {
               <ProductDetailPage />
             </Suspense>
           } />
-          <Route path="/about" element={
-            <Suspense fallback={<PageLoader />}>
-              <AboutPage />
-            </Suspense>
-          } />
           <Route path="/contact" element={
             <Suspense fallback={<PageLoader />}>
               <ContactPage />
@@ -124,6 +119,7 @@ const App: React.FC = () => {
             </Suspense>
           } />
         </Routes>
+        <Footer />
         <SpeedInsights />
       </div>
     </ClickSpark>
