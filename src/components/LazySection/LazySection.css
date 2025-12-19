@@ -1,32 +1,4 @@
 /* LazySection - Progressive rendering component */
 .lazy-section {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-  will-change: opacity, transform;
   contain: layout style paint;
-}
-
-.lazy-section--visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Remove will-change after animation completes to save memory */
-.lazy-section--visible {
-  animation: removeWillChange 0.6s forwards;
-}
-
-@keyframes removeWillChange {
-  to {
-    will-change: auto;
-  }
-}
-
-/* Reduce motion for accessibility */
-@media (prefers-reduced-motion: reduce) {
-  .lazy-section {
-    transition: opacity 0.3s ease-out;
-    transform: none;
-  }
 }
