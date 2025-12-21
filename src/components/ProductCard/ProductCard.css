@@ -2,7 +2,7 @@
    PRODUCT CARD - FLIP DESIGN
    ======================================== */
 
-/* Container với perspective cho hiệu ứng 3D */
+/* Card container with 3D perspective */
 .product-card-container {
   width: 100%;
   max-width: 320px;
@@ -11,7 +11,7 @@
   cursor: pointer;
 }
 
-/* Flipper - phần tử xoay */
+/* Flipper element for rotation */
 .product-card-flipper {
   position: relative;
   width: 100%;
@@ -24,7 +24,7 @@
   transform: rotateY(180deg);
 }
 
-/* Card chung cho cả 2 mặt */
+/* Shared card styles for both faces */
 .product-card {
   position: absolute;
   width: 100%;
@@ -39,12 +39,12 @@
   color: var(--theme-text-primary);
 }
 
-/* Mặt trước */
+/* Front face */
 .product-card-front {
   z-index: 2;
 }
 
-/* Mặt sau */
+/* Back face */
 .product-card-back {
   transform: rotateY(180deg);
   display: flex;
@@ -54,7 +54,7 @@
 }
 
 /* ========================================
-   MẶT TRƯỚC - FRONT SIDE
+   FRONT SIDE - MAIN DISPLAY
    ======================================== */
 
 .top-card {
@@ -209,7 +209,7 @@
 }
 
 /* ========================================
-   MẶT SAU - BACK SIDE
+   BACK SIDE - DETAILED INFORMATION
    ======================================== */
 
 .product-card-back-header {

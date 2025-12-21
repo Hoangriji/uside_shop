@@ -258,8 +258,7 @@ const HomePage = () => {
         </section>
       </LazySection>
 
-      {/* Free Digital Products Section - Lazy Load */}
-      {/* <hr className="line"></hr> */}
+      {/* Free Digital Products Section */}
       <LazySection
         threshold={0.1}
         rootMargin="100px"
