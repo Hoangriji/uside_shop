@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useProducts } from '../../../hooks/useProducts';
+import { useVirtualScroll } from '../../../hooks/useVirtualScroll';
 import { ProductsService } from '../../../services/firebaseService';
 import type { Product } from '../../../types';
+
+const ITEM_HEIGHT = 110;
+const CONTAINER_HEIGHT = 600;
 
 const FeaturedManagement: React.FC = () => {
   const { products, loading, mutate } = useProducts();
@@ -17,6 +21,18 @@ const FeaturedManagement: React.FC = () => {
       setFreeDigitalProducts(freeDigital);
     }
   }, [products]);
+
+  const featuredVirtual = useVirtualScroll(featuredProducts, {
+    itemHeight: ITEM_HEIGHT,
+    containerHeight: CONTAINER_HEIGHT,
+    overscan: 5,
+  });
+
+  const digitalVirtual = useVirtualScroll(freeDigitalProducts, {
+    itemHeight: ITEM_HEIGHT,
+    containerHeight: CONTAINER_HEIGHT,
+    overscan: 5,
+  });
 
   const handleToggleFeatured = async (product: Product) => {
     try {
@@ -79,24 +95,46 @@ const FeaturedManagement: React.FC = () => {
                 <small>Đánh dấu sản phẩm là featured để hiển thị ở đây</small>
               </div>
             ) : (
-              <div className="product-grid">
-                {featuredProducts.map((product) => (
-                  <div key={product.id} className="featured-product-card">
-                    <div className="product-card-image">
-                      <img src={product.images[0]} alt={product.name} />
-                      <span className="featured-badge" onClick={() => handleToggleFeatured(product)}>
-                        <i className="fas fa-star"></i> Featured
-                      </span>
-                    </div>
-                    <div className="product-card-info">
-                      <h4>{product.name}</h4>
-                      <p className="product-price">
-                        {product.price_vnd.toLocaleString('vi-VN')}₫
-                      </p>
-                      <span className="product-category">{product.category}</span>
-                    </div>
-                  </div>
-                ))}
+              <div className="virtual-list-container" ref={featuredVirtual.containerRef}>
+                <div className="virtual-list-spacer" style={{ height: featuredVirtual.totalHeight }}>
+                  {featuredVirtual.virtualItems.map(({ index, offsetTop }) => {
+                    const product = featuredProducts[index];
+                    return (
+                      <div
+                        key={product.id}
+                        className="product-list-item"
+                        style={{ 
+                          position: 'absolute',
+                          top: offsetTop,
+                          left: 0,
+                          right: 0,
+                          height: ITEM_HEIGHT
+                        }}
+                      >
+                        <div className="product-image-small">
+                          <img src={product.images[0]} alt={product.name} />
+                        </div>
+                        <div className="product-info-main">
+                          <div className="product-name-section">
+                            <h4>{product.name}</h4>
+                            <span className="product-id">#{product.id}</span>
+                          </div>
+                          <div className="product-meta">
+                            <span className="product-category">{product.category}</span>
+                            <span className="product-price">
+                              {product.price_vnd.toLocaleString('vi-VN')}₫
+                            </span>
+                          </div>
+                        </div>
+                        <div className="product-actions">
+                          <span className="featured-badge active" onClick={() => handleToggleFeatured(product)}>
+                            <i className="fas fa-star"></i> Featured
+                          </span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             )}
           </div>
@@ -121,24 +159,46 @@ const FeaturedManagement: React.FC = () => {
                 <small>Tạo sản phẩm digital với is_free = true</small>
               </div>
             ) : (
-              <div className="product-grid">
-                {freeDigitalProducts.map((product) => (
-                  <div key={product.id} className="featured-product-card">
-                    <div className="product-card-image">
-                      <img src={product.images[0]} alt={product.name} />
-                      <span className="free-badge" onClick={() => handleToggleFree(product)}>
-                        <i className="fas fa-gift"></i> Miễn phí
-                      </span>
-                    </div>
-                    <div className="product-card-info">
-                      <h4>{product.name}</h4>
-                      <p className="product-size">
-                        <i className="fas fa-file"></i> {product.file_size || 'N/A'}
-                      </p>
-                      <span className="product-category">{product.category}</span>
-                    </div>
-                  </div>
-                ))}
+              <div className="virtual-list-container" ref={digitalVirtual.containerRef}>
+                <div className="virtual-list-spacer" style={{ height: digitalVirtual.totalHeight }}>
+                  {digitalVirtual.virtualItems.map(({ index, offsetTop }) => {
+                    const product = freeDigitalProducts[index];
+                    return (
+                      <div
+                        key={product.id}
+                        className="product-list-item"
+                        style={{ 
+                          position: 'absolute',
+                          top: offsetTop,
+                          left: 0,
+                          right: 0,
+                          height: ITEM_HEIGHT
+                        }}
+                      >
+                        <div className="product-image-small">
+                          <img src={product.images[0]} alt={product.name} />
+                        </div>
+                        <div className="product-info-main">
+                          <div className="product-name-section">
+                            <h4>{product.name}</h4>
+                            <span className="product-id">#{product.id}</span>
+                          </div>
+                          <div className="product-meta">
+                            <span className="product-category">{product.category}</span>
+                            <span className="product-size">
+                              <i className="fas fa-file"></i> {product.file_size || 'N/A'}
+                            </span>
+                          </div>
+                        </div>
+                        <div className="product-actions">
+                          <span className="free-badge active" onClick={() => handleToggleFree(product)}>
+                            <i className="fas fa-gift"></i> Miễn phí
+                          </span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             )}
           </div>

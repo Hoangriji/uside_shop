@@ -1,174 +1,171 @@
 /* Tech Button - Inspired by Modern Gaming/Tech UI */
 
 :root {
-  --tech-btn-height: 50px;
-  --tech-btn-cut-size: 12px;
-  --tech-btn-border-width: 2px;
-  --tech-btn-icon-width: 60px;
+    --tech-btn-height: 50px;
+    --tech-btn-cut-size: 12px;
+    --tech-btn-border-width: 2px;
+    --tech-btn-icon-width: 60px;
 }
 
 .tech-btn-wrapper {
-  position: relative;
-  display: inline-block;
-  text-decoration: none;
-  padding: var(--tech-btn-border-width);
-  height: var(--tech-btn-height);
-  cursor: pointer;
-  border: none;
-  background: transparent;
-  clip-path: polygon(
-    0 0,
-    100% 0,
-    100% calc(100% - var(--tech-btn-cut-size)),
-    calc(100% - var(--tech-btn-cut-size)) 100%,
-    0 100%
-  );
-  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    width: fit-content;
+    transform: scale(0.9);
+    transform-origin: center;
+    position: relative;
+    display: inline-flex;
+    text-decoration: none;
+    padding: var(--tech-btn-border-width);
+    height: var(--tech-btn-height);
+    cursor: pointer;
+    border: none;
+    background: var(--theme-bg-primary);
+    clip-path: polygon(0 0,
+            100% 0,
+            100% calc(100% - var(--tech-btn-cut-size)),
+            calc(100% - var(--tech-btn-cut-size)) 100%,
+            0 100%);
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 /* Primary variant - Accent color */
 .tech-btn-wrapper.primary {
-  background: var(--accent-primary);
+    background: var(--accent-primary);
 }
 
 .tech-btn-wrapper.primary .btn-inner {
-  background: var(--theme-bg-primary);
+    background: var(--theme-surface);
 }
 
 .tech-btn-wrapper.primary .btn-icon-section {
-  background: var(--accent-primary);
+    background: var(--accent-primary);
 }
 
 /* Secondary variant - Dark/subtle */
 .tech-btn-wrapper.secondary {
-  background: var(--theme-border);
+    background: var(--theme-border);
 }
 
 .tech-btn-wrapper.secondary .btn-inner {
-  background: var(--theme-surface);
+    background: var(--theme-bg-secondary);
 }
 
 .tech-btn-wrapper.secondary .btn-icon-section {
-  background: var(--theme-border);
+    background: var(--theme-border);
 }
 
 /* Inner container */
 .btn-inner {
-  display: flex;
-  height: 100%;
-  width: 100%;
-  clip-path: polygon(
-    0 0,
-    100% 0,
-    100% calc(100% - var(--tech-btn-cut-size) + 0.5px),
-    calc(100% - var(--tech-btn-cut-size) + 0.5px) 100%,
-    0 100%
-  );
-  overflow: hidden;
+    display: flex;
+    height: 100%;
+    width: 100%;
+    clip-path: polygon(0 0,
+            100% 0,
+            100% calc(100% - var(--tech-btn-cut-size) + 0.5px),
+            calc(100% - var(--tech-btn-cut-size) + 0.5px) 100%,
+            0 100%);
+    overflow: hidden;
 }
 
 /* Text section */
 .btn-text {
-  flex-grow: 1;
-  color: var(--theme-text-primary);
-  font-family: 'Quicksand', sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  padding: 0 20px;
-  display: flex;
-  align-items: center;
-  white-space: nowrap;
+    flex-grow: 1;
+    color: var(--theme-text-primary);
+    font-family: 'Quicksand', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.25px;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
 }
 
 /* Icon section */
 .btn-icon-section {
-  width: var(--tech-btn-icon-width);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  clip-path: polygon(
-    var(--tech-btn-cut-size) 0,
-    100% 0,
-    100% 100%,
-    0 100%,
-    0 var(--tech-btn-cut-size)
-  );
+    width: var(--tech-btn-icon-width);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    clip-path: polygon(var(--tech-btn-cut-size) 0,
+            100% 0,
+            100% 100%,
+            0 100%,
+            0 var(--tech-btn-cut-size));
 }
 
 /* Arrow icon */
 .arrow-icon {
-  width: 20px;
-  height: 20px;
-  stroke: white;
-  stroke-width: 3;
-  fill: none;
-  stroke-linecap: square;
-  stroke-linejoin: round;
-  transition: transform 0.3s ease;
+    width: 20px;
+    height: 20px;
+    stroke: white;
+    stroke-width: 3;
+    fill: none;
+    stroke-linecap: square;
+    stroke-linejoin: round;
+    transition: transform 0.3s ease;
 }
 
 /* Hover effects */
 .tech-btn-wrapper:hover {
-  filter: brightness(1.2);
-  transform: translateX(4px);
-  box-shadow: 0 0 20px var(--accent-glow);
+    filter: brightness(1.2);
+    transform: translateX(4px);
+    box-shadow: 0 0 20px var(--accent-glow);
 }
 
 .tech-btn-wrapper.primary:hover {
-  box-shadow: 0 0 25px var(--accent-glow);
+    box-shadow: 0 0 25px var(--accent-glow);
 }
 
 .tech-btn-wrapper:hover .arrow-icon {
-  transform: translateX(3px);
+    transform: translateX(3px);
 }
 
 /* Active state */
 .tech-btn-wrapper:active {
-  transform: translateX(2px) scale(0.98);
+    transform: translateX(2px) scale(0.98);
 }
 
 /* Light theme adjustments */
 :root.light-theme .btn-text {
-  color: var(--theme-text-primary);
+    color: var(--theme-text-primary);
 }
 
 :root.light-theme .tech-btn-wrapper.primary .btn-inner {
-  background: var(--light-background);
+    background: var(--theme-surface);
 }
 
 :root.light-theme .tech-btn-wrapper.secondary .btn-inner {
-  background: var(--light-surface);
+    background: var(--theme-bg-secondary);
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-  :root {
-    --tech-btn-height: 46px;
-    --tech-btn-cut-size: 10px;
-    --tech-btn-icon-width: 50px;
-  }
+    :root {
+        --tech-btn-height: 46px;
+        --tech-btn-cut-size: 10px;
+        --tech-btn-icon-width: 50px;
+    }
 
-  .btn-text {
-    font-size: 13px;
-    padding: 0 15px;
-  }
+    .btn-text {
+        font-size: 13px;
+        padding: 0 15px;
+    }
 
-  .arrow-icon {
-    width: 16px;
-    height: 16px;
-  }
+    .arrow-icon {
+        width: 16px;
+        height: 16px;
+    }
 }
 
 @media (max-width: 480px) {
-  :root {
-    --tech-btn-height: 42px;
-    --tech-btn-icon-width: 45px;
-  }
+    :root {
+        --tech-btn-height: 42px;
+        --tech-btn-icon-width: 45px;
+    }
 
-  .btn-text {
-    font-size: 12px;
-    padding: 0 12px;
-  }
+    .btn-text {
+        font-size: 12px;
+        padding: 0 12px;
+    }
 }

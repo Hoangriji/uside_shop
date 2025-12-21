@@ -139,6 +139,7 @@
   border-radius: 10px;
   font-size: 12px;
   font-weight: 900;
+  text-transform: capitalize;
 }
 
 .card-title-container {
