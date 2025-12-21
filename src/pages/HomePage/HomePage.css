@@ -1107,6 +1107,7 @@ hr.line {
   justify-content: center;
   opacity: 0;
   transition: opacity 0.4s ease;
+  pointer-events: none;
 }
 
 .about-image-overlay i {
@@ -1116,14 +1117,7 @@ hr.line {
   transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.about-image-card:hover .about-image-overlay {
-  opacity: 0.9;
-}
-
-.about-image-card:hover .about-image-overlay i {
-  transform: scale(1);
-}
-
+/* Remove overlay effect on hover - keep only image scale */
 .about-image-card:hover img {
   transform: scale(1.1);
 }
