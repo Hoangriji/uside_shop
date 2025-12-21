@@ -123,6 +123,72 @@ const HomePage = () => {
         </div>
       </section>
 
+      {/* About Us Section */}
+      <section className="about-section">
+        <div className="about-container">
+          {/* Left side - Images */}
+          <div className="about-images">
+            <div className="about-image-grid">
+              <div className="about-image-card about-main-image">
+                <img
+                  src="https://images.unsplash.com/photo-1587202372634-32705e3bf49c?w=600&h=600&fit=crop"
+                  alt="Gaming Keyboard"
+                  loading="lazy"
+                />
+                <div className="about-image-overlay">
+                  <i className="fas fa-keyboard"></i>
+                </div>
+              </div>
+              <div className="about-image-card">
+                <img
+                  src="https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?w=400&h=400&fit=crop"
+                  alt="Gaming Mouse"
+                  loading="lazy"
+                />
+                <div className="about-image-overlay">
+                  <i className="fas fa-mouse"></i>
+                </div>
+              </div>
+              <div className="about-image-card">
+                <img
+                  src="https://images.unsplash.com/photo-1599669454699-248893623440?w=400&h=400&fit=crop"
+                  alt="Gaming Headset"
+                  loading="lazy"
+                />
+                <div className="about-image-overlay">
+                  <i className="fas fa-headphones"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right side - Content */}
+          <div className="about-content">
+            <div className="about-header">
+              <span className="about-tag">
+                <i className="fas fa-info-circle"></i>
+                Về chúng tôi
+              </span>
+              <h2 className="about-title">
+                Nơi Hội Tụ Những <span className="highlight">Gaming Gear</span> Đỉnh Cao
+              </h2>
+            </div>
+
+            <div className="about-description">
+              <p>
+                <strong>USide Shop</strong> là điểm đến hàng đầu cho những game thủ và tech enthusiasts 
+                tìm kiếm thiết bị công nghệ chất lượng cao. Chúng tôi tự hào mang đến bộ sưu tập đa dạng 
+                từ gaming peripherals đến digital products.
+              </p>
+              <p>
+                Với cam kết về chất lượng và dịch vụ khách hàng tận tâm, chúng tôi không chỉ bán sản phẩm 
+                mà còn đồng hành cùng bạn trong hành trình chinh phục đỉnh cao gaming.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Featured Products Section - Lazy Load */}
       <LazySection
         threshold={0.1}
