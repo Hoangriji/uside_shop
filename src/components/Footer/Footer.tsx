@@ -124,7 +124,6 @@ const Footer: React.FC = () => {
               <div className="payment-icons">
                 <i className="fas fa-money-bill-wave" title="VND Cash"></i>
                 <i className="fas fa-coins" title="USide Coin"></i>
-                <i className="fab fa-bitcoin" title="Crypto"></i>
               </div>
             </div>
           </div>

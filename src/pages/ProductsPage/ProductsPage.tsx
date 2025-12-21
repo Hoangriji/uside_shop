@@ -662,6 +662,20 @@ const ProductsPage: React.FC = () => {
       ? products 
       : products.filter(product => product.category === selectedCategory);
 
+    // Filter by search query from URL
+    const searchQuery = searchParams.get('search');
+    if (searchQuery && searchQuery.trim()) {
+      const query = searchQuery.toLowerCase().trim();
+      filtered = filtered.filter(product =>
+        product.name.toLowerCase().includes(query) ||
+        product.description.toLowerCase().includes(query) ||
+        product.category.toLowerCase().includes(query) ||
+        product.subcategory.toLowerCase().includes(query) ||
+        product.brand?.toLowerCase().includes(query) ||
+        product.tags?.some(tag => tag.toLowerCase().includes(query))
+      );
+    }
+
     // Filter by brands
     if (selectedBrands.length > 0) {
       filtered = filtered.filter(product => {
@@ -886,7 +900,7 @@ const ProductsPage: React.FC = () => {
       default:
         return filtered.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
     }
-  }, [products, selectedCategory, selectedBrands, selectedConnectionTypes, selectedCompatibility, selectedFormFactors, selectedLedTypes, selectedFeatures, selectedHeadsetTypes, selectedUseCases, selectedScreenSizes, selectedRefreshRates, selectedResolutions, selectedResponseTimes, selectedPanelTypes, selectedMonitorFeatures, selectedStorageCapacities, selectedUsbTypes, selectedReadSpeeds, selectedWriteSpeeds, selectedMemoryCardTypes, selectedContentTypes, selectedFormatTypes, selectedLicenseTypes, selectedSoftwareCompatibility, selectedPriceRanges, selectedProductTypes, selectedMaterials, selectedSubcategories, selectedPriceRange, sortBy]);
+  }, [products, selectedCategory, selectedBrands, selectedConnectionTypes, selectedCompatibility, selectedFormFactors, selectedLedTypes, selectedFeatures, selectedHeadsetTypes, selectedUseCases, selectedScreenSizes, selectedRefreshRates, selectedResolutions, selectedResponseTimes, selectedPanelTypes, selectedMonitorFeatures, selectedStorageCapacities, selectedUsbTypes, selectedReadSpeeds, selectedWriteSpeeds, selectedMemoryCardTypes, selectedContentTypes, selectedFormatTypes, selectedLicenseTypes, selectedSoftwareCompatibility, selectedPriceRanges, selectedProductTypes, selectedMaterials, selectedSubcategories, selectedPriceRange, sortBy, searchParams]);
 
   const displayedProducts = filteredProducts.slice(0, displayCount);
   const hasMoreProducts = filteredProducts.length > displayCount;
@@ -1253,6 +1267,22 @@ const ProductsPage: React.FC = () => {
               <i className="fas fa-th-large"></i>
               Tất Cả Sản Phẩm
             </h1>
+            {/* Search Query Display */}
+            {searchParams.get('search') && (
+              <div className="search-query-display">
+                <i className="fas fa-search"></i>
+                Kết quả tìm kiếm cho: <strong>"{searchParams.get('search')}"</strong>
+                <button 
+                  className="clear-search-btn"
+                  onClick={() => {
+                    navigate('/products');
+                  }}
+                  title="Xóa tìm kiếm"
+                >
+                  <i className="fas fa-times"></i>
+                </button>
+              </div>
+            )}
           </div>
         </div>
 

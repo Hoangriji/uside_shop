@@ -274,14 +274,7 @@
     justify-content: center;
     color: var(--accent-primary);
     font-size: 1.1rem;
-    cursor: pointer;
     transition: all var(--transition-normal);
-}
-
-.payment-icons i:hover {
-    transform: scale(1.2);
-    color: var(--accent-secondary);
-    filter: drop-shadow(0 0 8px var(--accent-glow));
 }
 
 /* Scroll to Top Button */

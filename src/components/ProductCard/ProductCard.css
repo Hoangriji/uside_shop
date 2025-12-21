@@ -46,7 +46,7 @@
   height: 100%;
   backface-visibility: hidden;
   border: 2px solid var(--highlight-primary);
-  border-radius: 20px;
+  border-radius: 8px;
   overflow: hidden;
   font-family: Arial, sans-serif;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
@@ -221,7 +221,7 @@
   font-size: 13px;
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -230,7 +230,6 @@
 
 .quick-view-btn:hover {
   background: var(--font-primary);
-  transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(0, 210, 255, 0.4);
 }
 

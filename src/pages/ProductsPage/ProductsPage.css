@@ -21,6 +21,10 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+.header-content {
+  width: 100%;
+}
+
 .header-content h1.page-title {
   display: flex;
   align-items: center;
@@ -33,6 +37,54 @@
 
 .header-content .page-title i {
   color: var(--accent-primary);
+}
+
+/* Search Query Display */
+.search-query-display {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  padding: 0.75rem 1.25rem;
+  background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.15), rgba(var(--accent-rgb), 0.05));
+  border: 2px solid var(--accent-primary);
+  border-radius: 12px;
+  color: var(--theme-text-primary);
+  font-size: 1rem;
+  box-shadow: 
+    0 4px 12px rgba(var(--accent-rgb), 0.2),
+    inset 2px 2px 4px rgba(255, 255, 255, 0.05);
+}
+
+.search-query-display i {
+  color: var(--accent-primary);
+  font-size: 1.1rem;
+}
+
+.search-query-display strong {
+  color: var(--accent-primary);
+  font-weight: 600;
+}
+
+.clear-search-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 50%;
+  color: var(--theme-text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-left: 0.5rem;
+}
+
+.clear-search-btn:hover {
+  background: var(--accent-danger);
+  color: white;
+  transform: scale(1.1);
 }
 
 .page-description {
