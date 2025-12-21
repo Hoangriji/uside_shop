@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useProducts } from '../../hooks/useProducts';
+import { useProductsPaginated } from '../../hooks/useProductsPaginated';
 import { useCategories } from '../../hooks/useCategories';
 import { SimpleProductCard } from '../../components/SimpleProductCard/SimpleProductCard';
 import Button from '../../components/Button/Button';
@@ -94,13 +94,17 @@ const PRICE_RANGES: PriceRange[] = [
   { min: 5000000, max: null, label: 'Trên 5TR' },
 ];
 
-const INITIAL_DISPLAY = 16;
-const LOAD_MORE_COUNT = 12;
-
 const ProductsPage: React.FC = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const { products, loading: productsLoading, error: productsError } = useProducts();
+  const { 
+    products, 
+    loading: productsLoading, 
+    loadingMore,
+    hasMore,
+    loadMore,
+    error: productsError 
+  } = useProductsPaginated(); // Auto-calculate based on viewport
   const { categories, loading: categoriesLoading } = useCategories();
   
   const categoryFromUrl = searchParams.get('category') || 'all';
@@ -140,10 +144,63 @@ const ProductsPage: React.FC = () => {
   const [selectedPriceRanges, setSelectedPriceRanges] = React.useState<string[]>([]);
   const [selectedProductTypes, setSelectedProductTypes] = React.useState<string[]>([]);
   const [selectedMaterials, setSelectedMaterials] = React.useState<string[]>([]);
-  const [displayCount, setDisplayCount] = React.useState<number>(INITIAL_DISPLAY);
 
   // Dropdown open states
   const [openDropdowns, setOpenDropdowns] = React.useState<Set<string>>(new Set());
+  
+  // Sort dropdown state
+  const [sortDropdownOpen, setSortDropdownOpen] = React.useState(false);
+  
+  // Ref for infinite scroll observer
+  const loadMoreTriggerRef = React.useRef<HTMLDivElement>(null);
+  
+  // Ref for sort dropdown to handle outside clicks
+  const sortDropdownRef = React.useRef<HTMLDivElement>(null);
+
+  // Infinite scroll effect
+  React.useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        // When the trigger element is visible and we have more data
+        if (entries[0].isIntersecting && hasMore && !loadingMore) {
+          loadMore();
+        }
+      },
+      {
+        root: null,
+        rootMargin: '200px', // Start loading 200px before reaching the trigger
+        threshold: 0.1,
+      }
+    );
+
+    const currentTrigger = loadMoreTriggerRef.current;
+    if (currentTrigger) {
+      observer.observe(currentTrigger);
+    }
+
+    return () => {
+      if (currentTrigger) {
+        observer.unobserve(currentTrigger);
+      }
+    };
+  }, [hasMore, loadingMore, loadMore]);
+
+  // Close sort dropdown when clicking outside
+  React.useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (sortDropdownRef.current && !sortDropdownRef.current.contains(event.target as Node)) {
+        setSortDropdownOpen(false);
+      }
+    };
+
+    if (sortDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [sortDropdownOpen]);
 
   React.useEffect(() => {
     const categoryParam = searchParams.get('category');
@@ -178,7 +235,7 @@ const ProductsPage: React.FC = () => {
       setSelectedPriceRanges([]);
       setSelectedProductTypes([]);
       setSelectedMaterials([]);
-      setDisplayCount(INITIAL_DISPLAY);
+  
     }
   }, [searchParams]);
 
@@ -902,12 +959,8 @@ const ProductsPage: React.FC = () => {
     }
   }, [products, selectedCategory, selectedBrands, selectedConnectionTypes, selectedCompatibility, selectedFormFactors, selectedLedTypes, selectedFeatures, selectedHeadsetTypes, selectedUseCases, selectedScreenSizes, selectedRefreshRates, selectedResolutions, selectedResponseTimes, selectedPanelTypes, selectedMonitorFeatures, selectedStorageCapacities, selectedUsbTypes, selectedReadSpeeds, selectedWriteSpeeds, selectedMemoryCardTypes, selectedContentTypes, selectedFormatTypes, selectedLicenseTypes, selectedSoftwareCompatibility, selectedPriceRanges, selectedProductTypes, selectedMaterials, selectedSubcategories, selectedPriceRange, sortBy, searchParams]);
 
-  const displayedProducts = filteredProducts.slice(0, displayCount);
-  const hasMoreProducts = filteredProducts.length > displayCount;
-
-  const handleLoadMore = () => {
-    setDisplayCount(prev => prev + LOAD_MORE_COUNT);
-  };
+  // For display - show all filtered products (pagination happens at Firebase level)
+  const displayedProducts = filteredProducts;
 
   const handleBrandToggle = (brand: string) => {
     setSelectedBrands(prev =>
@@ -915,7 +968,6 @@ const ProductsPage: React.FC = () => {
         ? prev.filter(b => b !== brand)
         : [...prev, brand]
     );
-    setDisplayCount(INITIAL_DISPLAY);
   };
 
   const handleConnectionTypeToggle = (connectionType: string) => {
@@ -924,7 +976,7 @@ const ProductsPage: React.FC = () => {
         ? prev.filter(c => c !== connectionType)
         : [...prev, connectionType]
     );
-    setDisplayCount(INITIAL_DISPLAY);
+
   };
 
   const handleCompatibilityToggle = (compatibility: string) => {
@@ -933,7 +985,7 @@ const ProductsPage: React.FC = () => {
         ? prev.filter(c => c !== compatibility)
         : [...prev, compatibility]
     );
-    setDisplayCount(INITIAL_DISPLAY);
+
   };
 
   const handleFormFactorToggle = (formFactor: string) => {
@@ -942,7 +994,7 @@ const ProductsPage: React.FC = () => {
         ? prev.filter(f => f !== formFactor)
         : [...prev, formFactor]
     );
-    setDisplayCount(INITIAL_DISPLAY);
+
   };
 
   const handleLedTypeToggle = (ledType: string) => {
@@ -951,7 +1003,7 @@ const ProductsPage: React.FC = () => {
         ? prev.filter(l => l !== ledType)
         : [...prev, ledType]
     );
-    setDisplayCount(INITIAL_DISPLAY);
+
   };
 
   const handleFeatureToggle = (feature: string) => {
@@ -960,7 +1012,7 @@ const ProductsPage: React.FC = () => {
         ? prev.filter(f => f !== feature)
         : [...prev, feature]
     );
-    setDisplayCount(INITIAL_DISPLAY);
+
   };
 
   const handleHeadsetTypeToggle = (headsetType: string) => {
@@ -969,7 +1021,7 @@ const ProductsPage: React.FC = () => {
         ? prev.filter(h => h !== headsetType)
         : [...prev, headsetType]
     );
-    setDisplayCount(INITIAL_DISPLAY);
+
   };
 
   const handleUseCaseToggle = (useCase: string) => {
@@ -978,7 +1030,7 @@ const ProductsPage: React.FC = () => {
         ? prev.filter(u => u !== useCase)
         : [...prev, useCase]
     );
-    setDisplayCount(INITIAL_DISPLAY);
+
   };
 
   const handleScreenSizeToggle = (screenSize: string) => {
@@ -987,7 +1039,7 @@ const ProductsPage: React.FC = () => {
         ? prev.filter(s => s !== screenSize)
         : [...prev, screenSize]
     );
-    setDisplayCount(INITIAL_DISPLAY);
+
   };
 
   const handleRefreshRateToggle = (refreshRate: string) => {
@@ -996,7 +1048,7 @@ const ProductsPage: React.FC = () => {
         ? prev.filter(r => r !== refreshRate)
         : [...prev, refreshRate]
     );
-    setDisplayCount(INITIAL_DISPLAY);
+
   };
 
   const handleResolutionToggle = (resolution: string) => {
@@ -1005,7 +1057,7 @@ const ProductsPage: React.FC = () => {
         ? prev.filter(r => r !== resolution)
         : [...prev, resolution]
     );
-    setDisplayCount(INITIAL_DISPLAY);
+
   };
 
   const handleResponseTimeToggle = (responseTime: string) => {
@@ -1014,7 +1066,7 @@ const ProductsPage: React.FC = () => {
         ? prev.filter(r => r !== responseTime)
         : [...prev, responseTime]
     );
-    setDisplayCount(INITIAL_DISPLAY);
+
   };
 
   const handlePanelTypeToggle = (panelType: string) => {
@@ -1023,7 +1075,7 @@ const ProductsPage: React.FC = () => {
         ? prev.filter(p => p !== panelType)
         : [...prev, panelType]
     );
-    setDisplayCount(INITIAL_DISPLAY);
+
   };
 
   const handleMonitorFeatureToggle = (feature: string) => {
@@ -1032,7 +1084,7 @@ const ProductsPage: React.FC = () => {
         ? prev.filter(f => f !== feature)
         : [...prev, feature]
     );
-    setDisplayCount(INITIAL_DISPLAY);
+
   };
 
   // USB filter handlers
@@ -1042,7 +1094,7 @@ const ProductsPage: React.FC = () => {
         ? prev.filter(c => c !== capacity)
         : [...prev, capacity]
     );
-    setDisplayCount(INITIAL_DISPLAY);
+
   };
 
   const handleUsbTypeToggle = (usbType: string) => {
@@ -1051,7 +1103,7 @@ const ProductsPage: React.FC = () => {
         ? prev.filter(u => u !== usbType)
         : [...prev, usbType]
     );
-    setDisplayCount(INITIAL_DISPLAY);
+
   };
 
   const handleReadSpeedToggle = (readSpeed: string) => {
@@ -1060,7 +1112,7 @@ const ProductsPage: React.FC = () => {
         ? prev.filter(r => r !== readSpeed)
         : [...prev, readSpeed]
     );
-    setDisplayCount(INITIAL_DISPLAY);
+
   };
 
   const handleWriteSpeedToggle = (writeSpeed: string) => {
@@ -1069,7 +1121,7 @@ const ProductsPage: React.FC = () => {
         ? prev.filter(w => w !== writeSpeed)
         : [...prev, writeSpeed]
     );
-    setDisplayCount(INITIAL_DISPLAY);
+
   };
 
   const handleMemoryCardTypeToggle = (cardType: string) => {
@@ -1078,7 +1130,7 @@ const ProductsPage: React.FC = () => {
         ? prev.filter(c => c !== cardType)
         : [...prev, cardType]
     );
-    setDisplayCount(INITIAL_DISPLAY);
+
   };
 
   // Digital filter handlers
@@ -1088,7 +1140,7 @@ const ProductsPage: React.FC = () => {
         ? prev.filter(c => c !== contentType)
         : [...prev, contentType]
     );
-    setDisplayCount(INITIAL_DISPLAY);
+
   };
 
   const handleFormatTypeToggle = (formatType: string) => {
@@ -1097,7 +1149,7 @@ const ProductsPage: React.FC = () => {
         ? prev.filter(f => f !== formatType)
         : [...prev, formatType]
     );
-    setDisplayCount(INITIAL_DISPLAY);
+
   };
 
   const handleLicenseTypeToggle = (licenseType: string) => {
@@ -1106,7 +1158,7 @@ const ProductsPage: React.FC = () => {
         ? prev.filter(l => l !== licenseType)
         : [...prev, licenseType]
     );
-    setDisplayCount(INITIAL_DISPLAY);
+
   };
 
   const handleSoftwareCompatibilityToggle = (software: string) => {
@@ -1115,7 +1167,7 @@ const ProductsPage: React.FC = () => {
         ? prev.filter(s => s !== software)
         : [...prev, software]
     );
-    setDisplayCount(INITIAL_DISPLAY);
+
   };
 
   const handleOtherPriceRangeToggle = (priceRange: string) => {
@@ -1124,7 +1176,7 @@ const ProductsPage: React.FC = () => {
         ? prev.filter(p => p !== priceRange)
         : [...prev, priceRange]
     );
-    setDisplayCount(INITIAL_DISPLAY);
+
   };
 
   const handleOtherProductTypeToggle = (productType: string) => {
@@ -1133,7 +1185,7 @@ const ProductsPage: React.FC = () => {
         ? prev.filter(p => p !== productType)
         : [...prev, productType]
     );
-    setDisplayCount(INITIAL_DISPLAY);
+
   };
 
   const handleOtherMaterialToggle = (material: string) => {
@@ -1142,7 +1194,7 @@ const ProductsPage: React.FC = () => {
         ? prev.filter(m => m !== material)
         : [...prev, material]
     );
-    setDisplayCount(INITIAL_DISPLAY);
+
   };
 
   const handleSubcategoryToggle = (subcategory: string) => {
@@ -1151,12 +1203,12 @@ const ProductsPage: React.FC = () => {
         ? prev.filter(s => s !== subcategory)
         : [...prev, subcategory]
     );
-    setDisplayCount(INITIAL_DISPLAY);
+
   };
 
   const handlePriceRangeChange = (range: string) => {
     setSelectedPriceRange(range === selectedPriceRange ? '' : range);
-    setDisplayCount(INITIAL_DISPLAY);
+
   };
 
   const clearAllFilters = () => {
@@ -1188,7 +1240,7 @@ const ProductsPage: React.FC = () => {
     setSelectedProductTypes([]);
     setSelectedMaterials([]);
     setSelectedPriceRange('');
-    setDisplayCount(INITIAL_DISPLAY);
+
   };
 
   // Dropdown handlers
@@ -1322,18 +1374,64 @@ const ProductsPage: React.FC = () => {
               <i className="fas fa-sort"></i>
               Sắp xếp
             </h3>
-            <div className="sort-select-wrapper">
-              <select
-                className="sort-select"
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
+            <div className="sort-dropdown" ref={sortDropdownRef}>
+              <button
+                className={`sort-dropdown-btn ${sortDropdownOpen ? 'open' : ''}`}
+                onClick={() => setSortDropdownOpen(!sortDropdownOpen)}
               >
-                <option value="newest">Mới nhất</option>
-                <option value="price-low">Giá thấp đến cao</option>
-                <option value="price-high">Giá cao đến thấp</option>
-                <option value="name">Tên A-Z</option>
-              </select>
-              <i className="fas fa-chevron-down sort-icon"></i>
+                <span>
+                  {sortBy === 'newest' && 'Mới nhất'}
+                  {sortBy === 'price-low' && 'Giá thấp đến cao'}
+                  {sortBy === 'price-high' && 'Giá cao đến thấp'}
+                  {sortBy === 'name' && 'Tên A-Z'}
+                </span>
+                <i className="fas fa-chevron-down"></i>
+              </button>
+              
+              {sortDropdownOpen && (
+                <div className="sort-dropdown-list">
+                  <div
+                    className={`sort-option ${sortBy === 'newest' ? 'selected' : ''}`}
+                    onClick={() => {
+                      setSortBy('newest');
+                      setSortDropdownOpen(false);
+                    }}
+                  >
+                    <i className="fas fa-clock"></i>
+                    <span>Mới nhất</span>
+                  </div>
+                  <div
+                    className={`sort-option ${sortBy === 'price-low' ? 'selected' : ''}`}
+                    onClick={() => {
+                      setSortBy('price-low');
+                      setSortDropdownOpen(false);
+                    }}
+                  >
+                    <i className="fas fa-arrow-down"></i>
+                    <span>Giá thấp đến cao</span>
+                  </div>
+                  <div
+                    className={`sort-option ${sortBy === 'price-high' ? 'selected' : ''}`}
+                    onClick={() => {
+                      setSortBy('price-high');
+                      setSortDropdownOpen(false);
+                    }}
+                  >
+                    <i className="fas fa-arrow-up"></i>
+                    <span>Giá cao đến thấp</span>
+                  </div>
+                  <div
+                    className={`sort-option ${sortBy === 'name' ? 'selected' : ''}`}
+                    onClick={() => {
+                      setSortBy('name');
+                      setSortDropdownOpen(false);
+                    }}
+                  >
+                    <i className="fas fa-sort-alpha-down"></i>
+                    <span>Tên A-Z</span>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -2016,13 +2114,19 @@ const ProductsPage: React.FC = () => {
                 ))}
               </div>
               
-              {/* Load More Button */}
-              {hasMoreProducts && (
-                <div className="load-more-section">
-                  <Button variant="secondary" onClick={handleLoadMore}>
-                    <i className="fas fa-plus"></i>
-                    Xem thêm {Math.min(LOAD_MORE_COUNT, filteredProducts.length - displayCount)} sản phẩm
-                  </Button>
+              {/* Infinite Scroll Trigger */}
+              {hasMore && (
+                <div 
+                  ref={loadMoreTriggerRef} 
+                  className="infinite-scroll-trigger"
+                  style={{ height: '20px', margin: '20px 0' }}
+                >
+                  {loadingMore && (
+                    <div className="loading-indicator">
+                      <i className="fas fa-spinner fa-spin"></i>
+                      <span>Đang tải thêm sản phẩm...</span>
+                    </div>
+                  )}
                 </div>
               )}
             </>

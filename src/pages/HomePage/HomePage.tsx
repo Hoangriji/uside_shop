@@ -5,6 +5,7 @@ import { useProductStore } from "../../store/productStore";
 import ProductCarousel from "../../components/ProductCarousel/ProductCarousel";
 import { LazySection } from "../../components/LazySection";
 import { SkeletonCarousel, SkeletonCard } from "../../components/Skeleton";
+import { TechButton } from "../../components/TechButton";
 import Button from "../../components/Button";
 import "./HomePage.css";
 
@@ -166,9 +167,12 @@ const HomePage = () => {
               />
 
               <div className="section-footer">
-                <Button variant="secondary" onClick={() => navigate("/products")}>
-                  Xem tất cả sản phẩm <i className="fas fa-arrow-right"></i>
-                </Button>
+                <TechButton
+                  variant="secondary"
+                  onClick={() => navigate("/products")}
+                >
+                  Xem tất cả sản phẩm
+                </TechButton>
               </div>
             </section>
           ) : (
@@ -233,12 +237,12 @@ const HomePage = () => {
               />
 
               <div className="section-footer">
-                <Button
+                <TechButton
                   variant="primary"
                   onClick={() => navigate("/products?category=digital")}
                 >
-                  Khám phá thêm <i className="fas fa-arrow-right"></i>
-                </Button>
+                  Khám phá thêm
+                </TechButton>
               </div>
             </section>
           ) : (

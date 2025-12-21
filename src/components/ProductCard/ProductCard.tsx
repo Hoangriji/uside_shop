@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { WishlistButton } from '../WishlistButton';
+import { TechButton } from '../TechButton';
 import './ProductCard.css';
 
 interface Product {
@@ -105,10 +106,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onViewDetails
               </span>
             </div>
 
-            <button className="quick-view-btn" onClick={handleQuickViewClick}>
-              <i className="fas fa-info-circle"></i>
+            <TechButton
+              variant="primary"
+              onClick={handleQuickViewClick}
+              icon={<i className="fas fa-info-circle" style={{ fontSize: '16px', color: 'white' }}></i>}
+            >
               Xem nhanh thông số
-            </button>
+            </TechButton>
           </div>
         </div>
 

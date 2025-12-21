@@ -9,8 +9,12 @@ import {
   query, 
   where, 
   orderBy,
-  onSnapshot
+  onSnapshot,
+  limit,
+  startAfter,
+  QueryDocumentSnapshot
 } from 'firebase/firestore';
+import type { DocumentData } from 'firebase/firestore';
 import { 
   ref, 
   uploadBytes, 
@@ -37,6 +41,37 @@ export class ProductsService {
       
       callback(products);
     });
+  }
+
+  // Get paginated products (for initial load and lazy loading)
+  static async getPaginatedProducts(
+    pageSize: number = 20,
+    lastDoc?: QueryDocumentSnapshot<DocumentData>
+  ): Promise<{ products: Product[]; lastDoc: QueryDocumentSnapshot<DocumentData> | null }> {
+    let q = query(
+      this.collection, 
+      orderBy('created_at', 'desc'),
+      limit(pageSize)
+    );
+    
+    if (lastDoc) {
+      q = query(
+        this.collection,
+        orderBy('created_at', 'desc'),
+        startAfter(lastDoc),
+        limit(pageSize)
+      );
+    }
+    
+    const snapshot = await getDocs(q);
+    const products = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    })) as Product[];
+    
+    const lastVisible = snapshot.docs[snapshot.docs.length - 1] || null;
+    
+    return { products, lastDoc: lastVisible };
   }
 
   // Get products by category

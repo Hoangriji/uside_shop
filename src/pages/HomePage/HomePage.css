@@ -533,12 +533,11 @@ hr.line {
     max-width: 600px;
   }
   
-
-  
-
-  
   .hero-categories-container {
     margin-top: 3rem;
+    padding: 0 1rem;
+    max-width: 100%;
+    box-sizing: border-box;
   }
   
   .hero-categories {

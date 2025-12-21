@@ -9,6 +9,7 @@ export { default as ProgressBar } from './ProgressBar';
 export { PaymentOptions } from './PaymentOptions';
 export { ProductCard } from './ProductCard';
 export { TextType } from './TextType';
+export { TechButton } from './TechButton';
 export { ClickSpark } from './ClickSpark';
 export { AnimatedList } from './AnimatedList';
 export { LazySection } from './LazySection';
