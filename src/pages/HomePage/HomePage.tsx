@@ -234,7 +234,7 @@ const HomePage = () => {
 
               <div className="section-footer">
                 <TechButton
-                  variant="secondary"
+                  variant="primary"
                   onClick={() => navigate("/products")}
                 >
                   Xem tất cả sản phẩm
