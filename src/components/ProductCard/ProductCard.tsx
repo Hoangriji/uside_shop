@@ -109,7 +109,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onViewDetails
             <TechButton
               variant="primary"
               onClick={handleQuickViewClick}
-              icon={<i className="fas fa-info-circle" style={{ fontSize: '16px', color: 'white' }}></i>}
+              icon={<i className="fas fa-info-circle" style={{ fontSize: '16px', color: 'var(--theme-bg-primary)' }}></i>}
             >
               Xem nhanh thông số
             </TechButton>

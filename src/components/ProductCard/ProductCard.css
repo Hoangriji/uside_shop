@@ -199,13 +199,13 @@
   font-weight: bold;
   color: var(--accent-danger);
   padding: 0;
+  order: -1;
 }
 
 .card-price-original {
   font-size: 14px;
   color: var(--theme-text-secondary);
   text-decoration: line-through;
-  order: -1;
 }
 
 /* ========================================

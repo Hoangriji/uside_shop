@@ -72,7 +72,6 @@ const ContactPage: React.FC = () => {
                 </Button>
               </div>
             </div>
-
             <div className="contact-method discord">
               <div className="method-icon">
                 <i className="fab fa-discord"></i>
@@ -104,7 +103,7 @@ const ContactPage: React.FC = () => {
               <div className="faq-list">
                 <div className="faq-item">
                   <h4>Làm sao để thanh toán?</h4>
-                  <p>Bạn có thể thanh toán bằng tiền mặt (VND) qua Facebook hoặc Virtual Currency (UC) qua Discord.</p>
+                  <p>Bạn có thể thanh toán bằng tiền mặt (VND) qua Facebook hoặc Virtual Currency (UCoin) qua Discord.</p>
                 </div>
                 <div className="faq-item">
                   <h4>Thời gian giao hàng bao lâu?</h4>

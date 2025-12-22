@@ -46,7 +46,7 @@
 }
 
 .tech-btn-wrapper.secondary .btn-inner {
-    background: var(--theme-bg-secondary);
+    background: var(--theme-bg-primary);
 }
 
 .tech-btn-wrapper.secondary .btn-icon-section {
@@ -109,12 +109,12 @@
 /* Hover effects */
 .tech-btn-wrapper:hover {
     filter: brightness(1.2);
-    transform: scale(0.9) translateX(4px);
-    box-shadow: 0 0 20px var(--accent-glow);
+    transform: scale(0.9);
+    box-shadow: 0 0 20px var(--accent-primary);
 }
 
 .tech-btn-wrapper.primary:hover {
-    box-shadow: 0 0 25px var(--accent-glow);
+    box-shadow: 0 0 25px var(--accent-primary);
 }
 
 .tech-btn-wrapper:hover .arrow-icon {
@@ -136,7 +136,28 @@
 }
 
 :root.light-theme .tech-btn-wrapper.secondary .btn-inner {
-    background: var(--theme-bg-secondary);
+    background: var(--theme-bg-primary);
+}
+
+/* Section Navigation Button - Gray default with accent on hover */
+.tech-btn-wrapper.section-nav-btn {
+    background: var(--theme-border);
+}
+
+.tech-btn-wrapper.section-nav-btn .btn-inner {
+    background: var(--theme-bg-primary);
+}
+
+.tech-btn-wrapper.section-nav-btn .btn-icon-section {
+    background: var(--theme-border);
+}
+
+.tech-btn-wrapper.section-nav-btn:hover {
+    background: var(--accent-primary);
+}
+
+.tech-btn-wrapper.section-nav-btn:hover .btn-icon-section {
+    background: var(--accent-primary);
 }
 
 /* Responsive */

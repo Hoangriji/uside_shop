@@ -135,7 +135,7 @@ const Header: React.FC<HeaderProps> = ({
     <header className="header" ref={headerRef}>
       <div className="header-container">
         {/* Logo Section */}
-        <div className="logo-section">
+        <Link to="/" className="logo-section">
           <div className="logo">
             <i className="fas fa-cloud"></i>
           </div>
@@ -143,7 +143,7 @@ const Header: React.FC<HeaderProps> = ({
             <h1 className="logo-text">Uside Shop</h1>
             <p className="logo-subtitle">Gaming & Digital Store</p>
           </div>
-        </div>
+        </Link>
 
         {/* Main Navigation */}
         <nav className="main-nav">

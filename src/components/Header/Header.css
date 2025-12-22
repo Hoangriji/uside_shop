@@ -29,6 +29,8 @@
   align-items: center;
   gap: 1rem;
   justify-self: start;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .logo {
@@ -92,7 +94,7 @@
   border: 2px solid transparent;
   box-shadow:
       5px 5px 10px var(--theme-shadow-dark),
-      -5px -5px 12px var(--theme-shadow-light);
+      -4px -4px 10px var(--theme-shadow-light);
 }
 
 .nav-link:hover,
@@ -101,9 +103,6 @@
   background: var(--accent-light);
   border-color: var(--accent-primary);
   box-shadow: 
-      8px 8px 16px var(--theme-shadow-dark), 
-      -8px -8px 16px var(--theme-shadow-light), 
-      0 0 10px var(--accent-primary),
       inset 4px 6px 8px rgba(0, 0, 0, 1),
       inset -2px -3px 8px rgba(255, 255, 255, 0.1);
 }
@@ -463,8 +462,8 @@
   align-items: center;
   justify-content: center;
   box-shadow:
-    8px 8px 15px var(--theme-shadow-dark),
-    -8px -8px 15px var(--theme-shadow-light);
+    5px 5px 10px var(--theme-shadow-dark),
+    -4px -4px 10px var(--theme-shadow-light);
   border: 2px solid var(--theme-border);
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   position: relative;
@@ -474,9 +473,6 @@
   border: 2px solid var(--accent-primary);
   transform: scale(1.1);
   box-shadow: 
-    15px 15px 30px var(--theme-shadow-dark), 
-    -15px -15px 30px var(--theme-shadow-light), 
-    0 0 25px var(--accent-glow),
     inset 4px 6px 8px rgba(0, 0, 0, 1),
     inset -2px -3px 8px rgba(255, 255, 255, 0.1);
 }

@@ -265,6 +265,11 @@
   line-height: 1.6;
 }
 
+.method-info button {
+  display: flex;
+  gap: 4px;
+}
+
 /* Responsive Design */
 @media (max-width: 1024px) {
   .contact-content {
